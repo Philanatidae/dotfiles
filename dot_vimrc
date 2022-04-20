@@ -1,0 +1,41 @@
+call plug#begin()
+
+    Plug 'preservim/nerdtree'
+    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+    Plug 'ryanoasis/vim-devicons'
+    Plug 'dracula/vim' " Dark theme
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'tpope/vim-projectionist'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+
+call plug#end()
+
+" https://dev.to/rishitpandey/setting-up-neovim-like-vscode-j8h
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+
+nnoremap <C-t> :NERDTreeToggle<CR>
+
+" https://medium.com/geekculture/neovim-configuration-for-beginners-b2116dbbde84
+set nocompatible
+set tabstop=4
+set softtabstop=4
+set expandtab
+set shiftwidth=4
+set autoindent
+filetype plugin indent on
+syntax on
+" set mouse=a Disabling mosue so that I force myself to use keyboard only
+set clipboard=unnamedplus
+set cursorline
+set lazyredraw
+
+"if (has("termguicolors"))
+"    set termguicolors
+"end
+"syntax enable
+
+colorscheme dracula
+
+" Relative line numbers
+set relativenumber
