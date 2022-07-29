@@ -7,14 +7,75 @@ call plug#begin()
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'tpope/vim-projectionist'
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'voldikss/vim-floaterm'
+    Plug 'skywind3000/asynctasks.vim'
+    Plug 'skywind3000/asyncrun.vim'
+    Plug 'puremourning/vimspector'
+    "Plug 'mhinz/vim-startify'
+    "Plug 'lambdalisue/fern.vim'
+    Plug 'antoinemadec/FixCursorHold.nvim'
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    Plug 'zefei/vim-wintabs'
+    Plug 'zefei/vim-wintabs-powerline'
 
 call plug#end()
+
+let g:asyncrun_open = 6
+
+let g:airline_solarized_bg='dark'
+let g:airline_powerline_fonts = 1
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#show_tab_nr = 1
+
+nnoremap <silent> <leader>] :WintabsNext<CR>
+nnoremap <silent> <leader>[ :WintabsPrevious<CR>
+nnoremap <silent> <leader>q :WintabsClose<CR>
 
 " https://dev.to/rishitpandey/setting-up-neovim-like-vscode-j8h
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
+
 nnoremap <C-t> :NERDTreeToggle<CR>
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTreeToggle | endif
+
+" Exit Vim if NERDTree is the only window remaining in the only tab.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" If NERDTree is the only buffer remaining, open a new window to the right
+" side
+"autocmd BufEnter * if (expand('%') =~# 'NERD_tree' && winnr('$') == 1)  endif
+
+" Prevent FZF and NERDTree clashing in the same buffer
+function! FZFOpen(command_str)
+  if (expand('%') =~# 'NERD_tree' && winnr('$') > 1)
+    exe "normal! \<c-w>\<c-w>"
+  endif
+  exe 'normal! ' . a:command_str . "\<cr>"
+endfunction
+
+" Fuzzy File Finder
+"nnoremap <silent> <c-p> :call FZFOpen(':Files')<CR>
+nnoremap <silent> <leader>s :call FZFOpen(':Files')<CR>
+
+" Map shift-tab to dedent
+" May switch back but the `<` and `>` are for indenting.
+" inoremap <S-Tab> <C-d>
+
+" AsyncTask
+let g:asynctasks_term_pos = 'bottom'
+let g:asynctasks_term_reuse = 1
+
+" Vimspector
+let g:vimspector_install_gadgets = ['CodeLLDB']
+let g:vimspector_enable_mappings = 'HUMAN'
+
+" https://til.hashrocket.com/posts/wa1bvrgjdd-escaping-terminal-mode-in-an-nvim-terminal
+:tnoremap <Esc> <C-\><C-n>
 
 " https://medium.com/geekculture/neovim-configuration-for-beginners-b2116dbbde84
 set nocompatible
@@ -30,6 +91,13 @@ set clipboard=unnamedplus
 set cursorline
 set lazyredraw
 
+" Shorten filename shown on status line
+
+
+" Leader
+nnoremap <SPACE> <Nop>
+nmap <Space> <Leader>
+
 "if (has("termguicolors"))
 "    set termguicolors
 "end
@@ -39,3 +107,35 @@ colorscheme dracula
 
 " Relative line numbers
 set relativenumber
+
+" Floaterm
+nmap - :FloatermToggle<CR>
+
+" From coc.vim README
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Put shortcut for switch header/source
+nnoremap <silent> <leader>o :CocCommand clangd.switchSourceHeader<CR>
+
+" Shortcut for splitting window to right
+" nnoremap <silent> <leader>l 
+
