@@ -70,6 +70,8 @@ nnoremap <silent> <leader>s :call FZFOpen(':Files')<CR>
 let g:asynctasks_term_pos = 'bottom'
 let g:asynctasks_term_reuse = 1
 
+noremap <silent> <leader>r :AsyncTask run<CR>
+
 " Vimspector
 let g:vimspector_install_gadgets = ['CodeLLDB']
 let g:vimspector_enable_mappings = 'HUMAN'
@@ -138,4 +140,9 @@ nnoremap <silent> <leader>o :CocCommand clangd.switchSourceHeader<CR>
 
 " Shortcut for splitting window to right
 " nnoremap <silent> <leader>l 
+
+if has("nvim")
+  au TermOpen * tnoremap <Esc> <c-\><c-n>
+  au FileType fzf tunmap <Esc>
+endif
 
