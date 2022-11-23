@@ -1,28 +1,30 @@
 call plug#begin()
 
-    Plug 'preservim/nerdtree'
-    Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-    Plug 'ryanoasis/vim-devicons'
+    Plug 'preservim/nerdtree' " Side file tree
+    "Switch back to main branch (tiagofumo) once #54 is merged
+    "Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " File icons for NERDTree
+    Plug 'johnstef99/vim-nerdtree-syntax-highlight'
+    Plug 'ryanoasis/vim-devicons' " Converts custom unicode characters to icons (needs NERDFont)
     Plug 'dracula/vim' " Dark theme
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'tpope/vim-projectionist'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
-    Plug 'voldikss/vim-floaterm'
-    Plug 'skywind3000/asynctasks.vim'
-    Plug 'skywind3000/asyncrun.vim'
-    Plug 'puremourning/vimspector'
+    Plug 'neoclide/coc.nvim', {'branch': 'release'} " Completion engine
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy file finder
+    Plug 'junegunn/fzf.vim' " Vim integration for FZF
+    Plug 'voldikss/vim-floaterm' " Floating terminal
+    "Plug 'skywind3000/asynctasks.vim'
+    "Plug 'skywind3000/asyncrun.vim'
+    Plug 'puremourning/vimspector' " Debug interface
     "Plug 'mhinz/vim-startify'
     "Plug 'lambdalisue/fern.vim'
-    Plug 'antoinemadec/FixCursorHold.nvim'
-    Plug 'vim-airline/vim-airline'
-    Plug 'vim-airline/vim-airline-themes'
-    Plug 'zefei/vim-wintabs'
-    Plug 'zefei/vim-wintabs-powerline'
+    "Plug 'antoinemadec/FixCursorHold.nvim' ONLY NEEDED IN NVIM <v0.8
+    Plug 'vim-airline/vim-airline' " Improved bottom line (consider changing to vim-lightline)
+    Plug 'vim-airline/vim-airline-themes' " Themes for airline
+    Plug 'zefei/vim-wintabs' " Tabs for windows
+    Plug 'zefei/vim-wintabs-powerline' " Enables powerline fonts for vim-wintabs
+    Plug 'preservim/nerdcommenter' " Comment shortcut
 
 call plug#end()
 
-let g:asyncrun_open = 6
+"let g:asyncrun_open = 6
 
 let g:airline_solarized_bg='dark'
 let g:airline_powerline_fonts = 1
@@ -67,8 +69,8 @@ nnoremap <silent> <leader>s :call FZFOpen(':Files')<CR>
 " inoremap <S-Tab> <C-d>
 
 " AsyncTask
-let g:asynctasks_term_pos = 'bottom'
-let g:asynctasks_term_reuse = 1
+"let g:asynctasks_term_pos = 'bottom'
+"let g:asynctasks_term_reuse = 1
 
 noremap <silent> <leader>r :AsyncTask run<CR>
 
@@ -92,6 +94,13 @@ syntax on
 set clipboard=unnamedplus
 set cursorline
 set lazyredraw
+set nobackup
+set nowritebackup
+set updatetime=300
+set signcolumn=yes
+set splitbelow
+set splitright
+
 
 " Shorten filename shown on status line
 
@@ -115,15 +124,22 @@ nmap - :FloatermToggle<CR>
 
 " From coc.vim README
 " Use tab for trigger completion with characters ahead and navigate.
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
@@ -137,6 +153,21 @@ endif
 
 " Put shortcut for switch header/source
 nnoremap <silent> <leader>o :CocCommand clangd.switchSourceHeader<CR>
+
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 0
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
 
 " Shortcut for splitting window to right
 " nnoremap <silent> <leader>l 
