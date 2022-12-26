@@ -74,7 +74,14 @@ noremap <silent> <leader>r :AsyncTask run<CR>
 
 " Vimspector
 let g:vimspector_install_gadgets = ['CodeLLDB']
-let g:vimspector_enable_mappings = 'HUMAN'
+" let g:vimspector_enable_mappings = 'HUMAN'
+:nnoremap <silent> <leader>b <Plug>VimspectorToggleBreakpoints<ESC>
+:nnoremap <silent> <F6> <Plug>VimspectorContinue
+:nnoremap <silent> <F7> <Plug>VimspectorStepOver
+:nnoremap <silent> <F8> <Plug>VimspectorStepInto
+:nnoremap <silent> <F9> <Plug>VimspectorStepOut
+:nnoremap <silent> <F10> <Plug>VimspectorReset
+:nnoremap <silent> <leader>6 :call vimspector#Launch()<CR>
 
 " https://til.hashrocket.com/posts/wa1bvrgjdd-escaping-terminal-mode-in-an-nvim-terminal
 :tnoremap <Esc> <C-\><C-n>
