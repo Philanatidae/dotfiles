@@ -10,8 +10,8 @@ call plug#begin()
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } } " Fuzzy file finder
     Plug 'junegunn/fzf.vim' " Vim integration for FZF
     Plug 'voldikss/vim-floaterm' " Floating terminal
-    "Plug 'skywind3000/asynctasks.vim'
-    "Plug 'skywind3000/asyncrun.vim'
+    Plug 'skywind3000/asynctasks.vim'
+    Plug 'skywind3000/asyncrun.vim'
     Plug 'puremourning/vimspector' " Debug interface
     "Plug 'mhinz/vim-startify'
     "Plug 'lambdalisue/fern.vim'
