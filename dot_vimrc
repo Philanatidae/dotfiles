@@ -20,7 +20,7 @@ call plug#begin()
     Plug 'vim-airline/vim-airline-themes' " Themes for airline
     Plug 'zefei/vim-wintabs' " Tabs for windows
     Plug 'zefei/vim-wintabs-powerline' " Enables powerline fonts for vim-wintabs
-    Plug 'preservim/nerdcommenter' " Comment shortcut
+    "Plug 'preservim/nerdcommenter' " Comment shortcut
 
 call plug#end()
 
@@ -31,16 +31,53 @@ let g:airline_powerline_fonts = 1
 " let g:airline#extensions#tabline#enabled = 1
 " let g:airline#extensions#tabline#show_tab_nr = 1
 
-nnoremap <silent> <leader>] :WintabsNext<CR>
-nnoremap <silent> <leader>[ :WintabsPrevious<CR>
+nnoremap <silent> ] :WintabsNext<CR>
+nnoremap <silent> [ :WintabsPrevious<CR>
 nnoremap <silent> <leader>q :WintabsClose<CR>
+nnoremap <silent> <leader><S-q> :WintabsCloseWindow<CR>
+
+" Map <S-w> to <CTL-w>, to be a little less awkward since I use left-ctl
+nnoremap <S-w> <C-w>
+
+" Functions for splitting window without copying buffer. This "cheats"
+" by adding an empty window to the left/top, then move cursor right/bottom.
+:function SplitWinRight()
+    lefta vnew
+    wincmd l
+:endfunction
+:function SplitWinDown()
+    lefta new
+    wincmd j
+:endfunction
+
+nnoremap <silent> <leader>L :call SplitWinRight()<CR>
+nnoremap <silent> <leader>J :call SplitWinDown()<CR>
+
+" @todo Map :only ? (make current window the only one on the screen. All other
+" windows are closed.)
+" Map :WintabsOnly instead.
+
+" Resize left/right with -/=, resize down/up with _/= (S--, S-+)
+noremap <silent> = :<C-u>exe 'vertical resize +' . v:count1<CR>
+noremap <silent> - :<C-u>exe 'vertical resize -' . v:count1<CR>
+noremap <silent> + :<C-u>exe 'resize +' . v:count1<CR>
+noremap <silent> _ :<C-u>exe 'resize -' . v:count1<CR>
+
+" Save on <leader>w
+nnoremap <leader>w :update<CR>
+" Save all on <leader><S-w>
+nnoremap <leader><S-w> :bufdo update<CR>
+
+" Quit all on <leader><CTL-Q>
+nnoremap <silent> <leader><C-q> :qa<CR>
+
 
 " https://dev.to/rishitpandey/setting-up-neovim-like-vscode-j8h
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
 
-nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <silent> <C-t> :NERDTreeToggle<CR>
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTreeToggle | endif
@@ -63,10 +100,6 @@ endfunction
 " Fuzzy File Finder
 "nnoremap <silent> <c-p> :call FZFOpen(':Files')<CR>
 nnoremap <silent> <leader>s :call FZFOpen(':Files')<CR>
-
-" Map shift-tab to dedent
-" May switch back but the `<` and `>` are for indenting.
-" inoremap <S-Tab> <C-d>
 
 " AsyncTask
 "let g:asynctasks_term_pos = 'bottom'
@@ -107,6 +140,9 @@ set updatetime=300
 set signcolumn=yes
 set splitbelow
 set splitright
+let g:no_plugin_maps=1
+set smartcase
+set confirm
 
 
 " Shorten filename shown on status line
@@ -127,7 +163,8 @@ colorscheme dracula
 set relativenumber
 
 " Floaterm
-nmap - :FloatermToggle<CR>
+nnoremap <silent> ` :FloatermToggle<CR>
+tnoremap <silent> ` <C-\><C-n>:FloatermToggle<CR>
 
 " From coc.vim README
 " Use tab for trigger completion with characters ahead and navigate.
@@ -176,8 +213,8 @@ let g:NERDTrimTrailingWhitespace = 1
 " Enable NERDCommenterToggle to check all selected lines is commented or not 
 let g:NERDToggleCheckAllLines = 1
 
-" Shortcut for splitting window to right
-" nnoremap <silent> <leader>l 
+" Map redo to shift-u
+nnoremap U :redo<CR>
 
 if has("nvim")
   au TermOpen * tnoremap <Esc> <c-\><c-n>
