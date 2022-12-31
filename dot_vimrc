@@ -233,6 +233,10 @@ let g:NERDToggleCheckAllLines = 1
 " Map redo to shift-u
 nnoremap U :redo<CR>
 
+" Map <leader>v to <C-v> (visual block),
+" since some terminals will absorb C-v as paste.
+nnoremap <leader>v <C-v>
+
 if has("nvim")
   au TermOpen * tnoremap <Esc> <c-\><c-n>
   au FileType fzf tunmap <Esc>
