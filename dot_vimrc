@@ -33,12 +33,13 @@ call plug#begin()
     Plug 'zefei/vim-wintabs' " Tabs for windows
     Plug 'zefei/vim-wintabs-powerline' " Enables powerline fonts for vim-wintabs
     "Plug 'preservim/nerdcommenter' " Comment shortcut
+    Plug 'sonph/onehalf', { 'rtp': 'vim' }
 
 call plug#end()
 
 "let g:asyncrun_open = 6
 
-let g:airline_solarized_bg='dark'
+"let g:airline_solarized_bg='dark'
 let g:airline_powerline_fonts = 1
 " let g:airline#extensions#tabline#enabled = 1
 " let g:airline#extensions#tabline#show_tab_nr = 1
@@ -54,14 +55,16 @@ nnoremap <silent> <leader><S-q> :WintabsCloseWindow<CR>
 "Move back to <C-w> and see if it's bearable.
 "nnoremap <S-w> <C-w>
 
-" Functions for splitting window without copying buffer. This "cheats"
-" by adding an empty window to the left/top, then move cursor right/bottom.
 :function SplitWinRight()
-    lefta vnew
+    vsplit
+    wincmd h
+    WintabsClose
     wincmd l
 :endfunction
 :function SplitWinDown()
-    lefta new
+    split
+    wincmd k
+    WintabsClose
     wincmd j
 :endfunction
 
@@ -174,7 +177,12 @@ nmap <Space> <Leader>
 "end
 "syntax enable
 
-colorscheme dracula
+"colorscheme dracula
+syntax on
+"set t_Co=256
+set cursorline
+colorscheme onehalfdark
+let g:airline_theme='onehalfdark'
 
 " Relative line numbers
 set relativenumber
