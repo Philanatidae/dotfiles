@@ -149,7 +149,7 @@ set expandtab
 set shiftwidth=4
 set autoindent
 filetype plugin indent on
-syntax on
+"syntax off
 " set mouse=a Disabling mosue so that I force myself to use keyboard only
 set clipboard=unnamedplus
 set cursorline
@@ -178,7 +178,7 @@ nmap <Space> <Leader>
 "syntax enable
 
 "colorscheme dracula
-syntax on
+"syntax on
 "set t_Co=256
 set cursorline
 colorscheme onehalfdark
@@ -222,6 +222,9 @@ endif
 
 " Put shortcut for switch header/source
 nnoremap <silent> <leader>o :CocCommand clangd.switchSourceHeader<CR>
+
+" Syntax highlighting
+let g:coc_default_semantic_highlight_groups = 1
 
 " Create default mappings
 let g:NERDCreateDefaultMappings = 1
