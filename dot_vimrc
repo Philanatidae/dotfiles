@@ -5,7 +5,7 @@
 " Then, use the following in .zshrc/.bashrc:
 "   if type rg &> /dev/null; then
 "     export FZF_DEFAULT_COMMAND='rg --files'
-"     export FZF_DEFAULT_OPTS='-m --height 50% --border'
+"     export FZF_DEFAULT_OPTS='-i -m --height 50% --border'
 "   fi
 "
 " https://dev.to/iggredible/how-to-search-faster-in-vim-with-fzf-vim-36ko
