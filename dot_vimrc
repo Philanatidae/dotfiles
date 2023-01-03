@@ -34,6 +34,7 @@ call plug#begin()
     Plug 'zefei/vim-wintabs-powerline' " Enables powerline fonts for vim-wintabs
     "Plug 'preservim/nerdcommenter' " Comment shortcut
     Plug 'sonph/onehalf', { 'rtp': 'vim' }
+    Plug 'tikhomirov/vim-glsl'
 
 call plug#end()
 
