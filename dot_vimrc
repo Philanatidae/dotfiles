@@ -164,6 +164,10 @@ set splitright
 let g:no_plugin_maps=1
 set smartcase
 set confirm
+set filetype
+
+" We use .hmm for Objective-C++ headers
+autocmd BufRead,BufNewFile *.hmm set filetype=objc
 
 
 " Shorten filename shown on status line
