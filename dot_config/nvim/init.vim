@@ -109,6 +109,7 @@ augroup numbertoggle " Auto switch between relative/absolute line numbers
     autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu
 augroup END
 
+set ignorecase
 set smartcase " Search is case-sensitive if there is an uppercase letter
 
 au TermOpen * tnoremap <Esc> <c-\><c-n>
