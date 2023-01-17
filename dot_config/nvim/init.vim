@@ -53,6 +53,9 @@ call plug#begin()
     Plug 'sonph/onehalf', Cond(!exists('g:vscode'), { 'rtp': 'vim' }) " Theme (no 24-bit color)
     Plug 'EdenEast/nightfox.nvim', Cond(!exists('g:vscode')) " Theme (24-bit color, preferred)
 
+    Plug 'xolox/vim-misc' " Dependency for vim-session
+    Plug 'xolox/vim-session', Cond(!exists('g:vscode')) " Automatic sessions (may work with VSCode, not yet sure)
+
     Plug 'preservim/nerdtree', Cond(!exists('g:vscode')) " Side file tree 
     "Plug 'tiagofumo/vim-nerdtree-syntax-highlight', Cond(!exists('g:vscode')) " File icons for NERDTree
     Plug 'johnstef99/vim-nerdtree-syntax-highlight', Cond(!exists('g:vscode')) "Switch back to main branch (tiagofumo) once #54 is merged
@@ -308,3 +311,19 @@ let g:coc_default_semantic_highlight_groups = 1
 " == FLOATERM ==
 nnoremap <silent> ` :FloatermToggle<CR>
 tnoremap <silent> ` <C-\><C-n>:FloatermToggle<CR>
+
+" == SESSION ==
+set sessionoptions-=buffers " Don't save hidden and unloaded buffers in sessions
+set sessionoptions-=options " Don't persist options and mappings
+
+let g:session_autoload='yes' " Automatically restore session
+let g:session_autosave='yes' " Automatically save sesssion when exiting Vim
+let g:session_default_to_last=1 " Automatically default to the last open session instead of the default session
+
+" Persist options
+let g:session_persist_globals = ['&sessionoptions']
+call add(g:session_persist_globals, 'g:session_autoload')
+call add(g:session_persist_globals, 'g:session_autosave')
+call add(g:session_persist_globals, 'g:session_default_to_last')
+call add(g:session_persist_globals, 'g:session_persist_globals')
+
