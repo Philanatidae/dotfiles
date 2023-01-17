@@ -148,10 +148,16 @@ nnoremap <leader><S-w> :bufdo update<CR>
 nnoremap <silent> <leader><C-q> :qa<CR>
 
 " Resize left/right with -/=, resize down/up with _/= (S--, S-+)
-noremap <silent> = :<C-u>exe 'vertical resize +' . v:count1<CR>
-noremap <silent> - :<C-u>exe 'vertical resize -' . v:count1<CR>
-noremap <silent> + :<C-u>exe 'resize +' . v:count1<CR>
-noremap <silent> _ :<C-u>exe 'resize -' . v:count1<CR>
+nnoremap <silent> = :<C-u>exe 'vertical resize +' . v:count1<CR>
+nnoremap <silent> - :<C-u>exe 'vertical resize -' . v:count1<CR>
+nnoremap <silent> + :<C-u>exe 'resize +' . v:count1<CR>
+nnoremap <silent> _ :<C-u>exe 'resize -' . v:count1<CR>
+
+" Remap window movement to leader instead of Ctl-W
+nnoremap <silent> <leader>l :<C-u>exe ':wincmd ' . v:count1 . 'l'<CR>
+nnoremap <silent> <leader>k :<C-u>exe ':wincmd ' . v:count1 . 'k'<CR>
+nnoremap <silent> <leader>j :<C-u>exe ':wincmd ' . v:count1 . 'j'<CR>
+nnoremap <silent> <leader>h :<C-u>exe ':wincmd ' . v:count1 . 'h'<CR>
 
 " Map redo to shift-u
 nnoremap U :redo<CR>
@@ -198,11 +204,6 @@ if(!exists('g:vscode'))
     nnoremap <silent> <leader>K :WintabsMoveToWindow l<CR> " Move wintabs to above
     nnoremap <silent> <leader>J :WintabsMoveToWindow l<CR> " Move wintabs to below
 endif
-
-nnoremap <silent> <leader>l :wincmd l<CR> " Leader-l => Ctl-W l
-nnoremap <silent> <leader>k :wincmd k<CR> " Leader-k => Ctl-W k
-nnoremap <silent> <leader>j :wincmd j<CR> " Leader-J => Ctl-W j
-nnoremap <silent> <leader>h :wincmd h<CR> " Leader-H => Ctl-W h
 
 " == LIGHT LINE ==
 if !exists('g:vscode')
