@@ -99,7 +99,7 @@ set autoindent
 
 filetype plugin indent on
 
-set clipboard=unnamedplus " Use global clipboard
+"set clipboard=unnamedplus " Use global clipboard
 
 set cursorline " Highlight cursor line
 set signcolumn=yes " Needed for breakpoints, etc.
