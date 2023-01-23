@@ -73,6 +73,7 @@ call plug#begin()
     Plug 'zefei/vim-wintabs-powerline', Cond(!exists('g:vscode')) " Enables powerline fonts for vim-wintabs
 
     Plug 'neoclide/coc.nvim', {'branch': 'release'} " Completion engine
+    Plug 'josa42/vim-lightline-coc', Cond(!exists('g:vscode')) " CoC lightline helpers
 
     Plug 'voldikss/vim-floaterm', Cond(!exists('g:vscode')) " Floating terminal
     
@@ -116,21 +117,6 @@ set ignorecase
 set smartcase " Search is case-sensitive if there is an uppercase letter
 
 au TermOpen * tnoremap <Esc> <c-\><c-n>
-
-" == THEME ==
-if !exists('g:vscode')
-    syntax enable
-
-    if (has("termguicolors"))
-        set termguicolors
-
-        colorscheme nightfox
-        let g:lightline = { 'colorscheme': "nightfox" }
-    else
-        colorscheme onehalfdark
-        let g:lightline = { 'colorscheme': "onehalfdark" }
-    endif
-endif
 
 " == FILE TYPES ==
 " We use .hm/.hmm for Objective-C/C++ headers
@@ -210,15 +196,37 @@ endif
 
 " == LIGHT LINE ==
 if !exists('g:vscode')
+    function! CocCurrentFunction()
+        return get(b:, 'coc_current_function', '')
+    endfunction
+
     set noshowmode " Lightline shows mode on left side, we don't need this in the command section
 
+    let g:lightline = {}
     let g:lightline.enable = { 'statusline': 0, 'tabline': 0 } " Disable both; WinTabs will handle rendering
+
+    let g:lightline.component_function = {
+        \   'cocstatus': 'coc#status',
+        \   'currentfunction': 'CocCurrentFunction' 
+        \ }
+
+    call lightline#coc#register() " Register CoC-lightline components
+    " @todo coc_errors keeps showing up with the wrong color.
+    let g:lightline.component_type = {
+        \   'coc_warnings': 'warning',
+        \   'coc_errors': 'error',
+        \   'coc_info': 'info',
+        \   'coc_hints': 'hints',
+        \   'coc_ok': 'left',
+        \ }
 
     let g:lightline.active = {
         \ 'left': [ [ 'mode', 'paste' ],
-        \           [ 'readonly' ] ],
+        \           ['coc_warnings', 'coc_errors', 'coc_ok'],
+        \           ['coc_status' ] ],
         \ 'right': [ [ 'lineinfo' ],
         \            [ 'percent' ],
+        \            [ 'readonly' ],
         \            [ 'filetype' ] ] }
     let g:lightline.inactive = {
         \ 'left': [ [ 'filename' ] ],
@@ -227,6 +235,8 @@ if !exists('g:vscode')
     let g:lightline.tabline = {
         \ 'left': [ [ 'tabs' ] ],
         \ 'right': [ [ 'close' ] ] }
+
+    autocmd User CocStatusChange,CocDiagnosticChange WintabsRefresh
 
 endif
 
@@ -328,4 +338,19 @@ call add(g:session_persist_globals, 'g:session_autoload')
 call add(g:session_persist_globals, 'g:session_autosave')
 call add(g:session_persist_globals, 'g:session_default_to_last')
 call add(g:session_persist_globals, 'g:session_persist_globals')
+
+" == THEME ==
+if !exists('g:vscode')
+    syntax enable
+
+    if (has("termguicolors"))
+        set termguicolors
+
+        colorscheme nightfox
+        let g:lightline.colorscheme = "nightfox"
+    else
+        colorscheme onehalfdark
+        let g:lightline.colorscheme = "onehalfdark"
+    endif
+endif
 
