@@ -263,6 +263,8 @@ if !exists('g:vscode')
     nnoremap <silent> <leader>s :call FZFOpen(':Files')<CR>
     " Buffers on Leader-/
     nnoremap <silent> <leader>/ :call FZFOpen(':BLines')<CR>
+    " Ripgrep on Leader-Shift-S
+    nnoremap <silent> <leader>S :call FZFOpen(':Rg')<CR>
 
     au FileType fzf tunmap <Esc>
 endif
