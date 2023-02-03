@@ -57,9 +57,8 @@ call plug#begin()
     Plug 'xolox/vim-session', Cond(!exists('g:vscode')) " Automatic sessions (may work with VSCode, not yet sure)
 
     Plug 'preservim/nerdtree', Cond(!exists('g:vscode')) " Side file tree 
-    "Plug 'tiagofumo/vim-nerdtree-syntax-highlight', Cond(!exists('g:vscode')) " File icons for NERDTree
-    Plug 'johnstef99/vim-nerdtree-syntax-highlight', Cond(!exists('g:vscode')) "Switch back to main branch (tiagofumo) once #54 is merged
-    Plug 'ryanoasis/vim-devicons', Cond(!exists('g:vscode'))" Unicode characters to icons
+
+    Plug 'ryanoasis/vim-devicons' " Unicode characters to icons
 
     Plug 'itchyny/lightline.vim', Cond(!exists('g:vscode')) " Improved status line
 
@@ -210,6 +209,12 @@ if !exists('g:vscode')
         \   'currentfunction': 'CocCurrentFunction' 
         \ }
 
+    function! DevIconsFiletype()
+        return strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : ''
+    endfunction
+
+    let g:lightline.component_function.filetype = 'DevIconsFiletype'
+
     call lightline#coc#register() " Register CoC-lightline components
     " @todo coc_errors keeps showing up with the wrong color.
     let g:lightline.component_type = {
@@ -314,8 +319,12 @@ else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
 
-" Put shortcut for switch header/source
+" Mapping for switch header/source
 nnoremap <silent> <leader>o :CocCommand clangd.switchSourceHeader<CR>
+
+" Map next/previous error
+nnoremap <silent> <leader>e <Plug>(coc-diagnostic-next-error)
+nnoremap <silent> <leader>E <Plug>(coc-diagnostic-prev-error)
 
 " Syntax highlighting
 let g:coc_default_semantic_highlight_groups = 1
