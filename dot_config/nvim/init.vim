@@ -78,6 +78,8 @@ call plug#begin()
     
     Plug 'tpope/vim-commentary' " Comment plugin
 
+    Plug 'chaoren/vim-wordmotion' " Better 'word' (w/b) motions
+
     Plug 'tikhomirov/vim-glsl' " GLSL formatting
 call plug#end()
 
