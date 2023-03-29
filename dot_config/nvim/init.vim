@@ -58,6 +58,8 @@ call plug#begin()
 
     Plug 'preservim/nerdtree', Cond(!exists('g:vscode')) " Side file tree 
 
+    Plug 'nvim-treesitter/nvim-treesitter', Cond(!exists('g:vscode'), { 'do': ':TSUpdate' }) " Used by some plugins
+
     Plug 'ryanoasis/vim-devicons' " Unicode characters to icons
 
     Plug 'itchyny/lightline.vim', Cond(!exists('g:vscode')) " Improved status line
@@ -78,12 +80,11 @@ call plug#begin()
 
     Plug 'mfussenegger/nvim-dap', Cond(!exists('g:vscode')) " Debugger
     Plug 'rcarriga/nvim-dap-ui', Cond(!exists('g:vscode')) " UI for nvim-dap
+    Plug 'theHamsta/nvim-dap-virtual-text', Cond(!exists('g:vscode')) " virtual text for nvim-dap
     
     Plug 'tpope/vim-commentary' " Comment plugin
 
     Plug 'chaoren/vim-wordmotion' " Better 'word' (w/b) motions
-
-    Plug 'tikhomirov/vim-glsl' " GLSL formatting
 call plug#end()
 
 " == GLOBAL CONFIG ==
@@ -153,7 +154,11 @@ nnoremap <leader>w :update<CR>
 nnoremap <leader><S-w> :bufdo update<CR>
 
 " Quit all on <leader><CTL-Q>
-nnoremap <silent> <leader><C-q> :qa<CR>
+function! QuitAll()
+    " lua require'dap'.terminate()
+    qa
+endfunction
+nnoremap <silent> <leader><C-q> :call QuitAll()<CR>
 
 " Resize left/right with -/=, resize down/up with _/= (S--, S-+)
 nnoremap <silent> = :<C-u>exe 'vertical resize +' . v:count1<CR>
@@ -283,6 +288,36 @@ if !exists('g:vscode')
 
     nnoremap <silent> <leader>t :NERDTreeFind<CR>
 endif
+
+" == NVIM-TREESITTER ==
+lua << EOF
+
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = "all",
+    sync_install = false,
+    auto_install = true,
+    highlight = {
+        enable = true,
+        disable = function(lang, buf)
+            if lang == "c"
+                or lang == "cpp"
+                or lang == "objc"
+                or lang == "objcpp"
+                or lang == "xml"
+                or lang == "cmake"
+                then
+                return true
+            end
+            local max_filesize = 100 * 1024 -- 100 KB
+            local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+            if ok and stats and stats.size > max_filesize then
+                return true
+            end
+        end
+    }
+}
+
+EOF
 
 " == FZF ==
 if !exists('g:vscode')
@@ -417,6 +452,7 @@ if !exists('g:vscode')
     nnoremap <C-5>do :lua require'dap'.step_over()<CR>
     nnoremap <leader>du :lua require'dap'.up()<CR>
     nnoremap <leader>dd :lua require'dap'.down()<CR>
+    nnoremap <leader>df :lua require'dap'.focus_frame()<CR>
     nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
 endif
 
@@ -436,6 +472,15 @@ if not vim.g.vscode then
     dap.listeners.after.event_exited["dapui_config"] = function()
         dapui.close()
     end
+end
+EOF
+
+" == DAP-VIRTUAL-TEXT ==
+lua << EOF
+if not vim.g.vscode then
+    require('nvim-dap-virtual-text').setup {
+        all_references = true
+    }
 end
 EOF
 
