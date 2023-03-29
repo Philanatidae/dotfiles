@@ -143,6 +143,10 @@ EOF
 autocmd BufRead,BufNewFile *.hm set filetype=objc
 autocmd BufRead,BufNewFile *.hmm set filetype=objcpp
 
+" Vert/frag are GLSL
+autocmd BufRead,BufNewFile *.vert set filetype=glsl
+autocmd BufRead,BufNewFile *.frag set filetype=glsl
+
 " == CORE MAPPINGS ==
 " Space as Leader
 nnoremap <SPACE> <Nop>
