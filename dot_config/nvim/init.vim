@@ -56,6 +56,8 @@ call plug#begin()
     Plug 'xolox/vim-misc' " Dependency for vim-session
     Plug 'xolox/vim-session', Cond(!exists('g:vscode')) " Automatic sessions (may work with VSCode, not yet sure)
 
+    Plug 'nvim-lua/plenary.nvim' " Common Lua functions
+
     Plug 'preservim/nerdtree', Cond(!exists('g:vscode')) " Side file tree 
 
     Plug 'nvim-treesitter/nvim-treesitter', Cond(!exists('g:vscode'), { 'do': ':TSUpdate' }) " Used by some plugins
@@ -85,6 +87,8 @@ call plug#begin()
     Plug 'tpope/vim-commentary' " Comment plugin
 
     Plug 'chaoren/vim-wordmotion' " Better 'word' (w/b) motions
+
+    Plug 'folke/todo-comments.nvim' " todo comment highlight & search
 call plug#end()
 
 " == GLOBAL CONFIG ==
@@ -520,6 +524,35 @@ if !exists('g:vscode')
         colorscheme onehalfdark
         let g:lightline.colorscheme = "onehalfdark"
     endif
+endif
+
+" == TODO-COMMENTS ==
+lua << EOF
+
+if not vim.g.vscode then
+    require("todo-comments").setup {
+        keywords = {
+            FIX = {
+              icon = " ", -- icon used for the sign, and in search results
+              color = "error", -- can be a hex color, or a named color (see below)
+              alt = { "FIXME", "BUG", "FIXIT", "ISSUE" }, -- a set of other keywords that all map to this FIX keywords
+              -- signs = false, -- configure signs for some keywords individually
+            },
+            TODO = { icon = " ", color = "info", alt = { "todo" } },
+            HACK = { icon = " ", color = "warning" },
+            WARN = { icon = " ", color = "warning", alt = { "WARNING", "XXX", "warn", "warning" } },
+            PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+            NOTE = { icon = " ", color = "hint", alt = { "INFO", "info", "note" } },
+            TEST = { icon = "⏲ ", color = "test", alt = { "TESTING", "PASSED", "FAILED" } },
+        },
+        pattern = [[.*[@\\]{1}<(KEYWORDS)\s*|.*<(KEYWORDS)\s*:]],
+    }
+end
+
+EOF
+
+if !exists('g:vscode')
+    nnoremap <silent> <leader>T :TodoQuickFix keywords=TODO,WARN<CR>
 endif
 
 " == EXRC == (MUST GO LAST)
