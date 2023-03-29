@@ -75,6 +75,9 @@ call plug#begin()
     Plug 'josa42/vim-lightline-coc', Cond(!exists('g:vscode')) " CoC lightline helpers
 
     Plug 'voldikss/vim-floaterm', Cond(!exists('g:vscode')) " Floating terminal
+
+    Plug 'mfussenegger/nvim-dap', Cond(!exists('g:vscode')) " Debugger
+    Plug 'rcarriga/nvim-dap-ui', Cond(!exists('g:vscode')) " UI for nvim-dap
     
     Plug 'tpope/vim-commentary' " Comment plugin
 
@@ -118,6 +121,21 @@ set ignorecase
 set smartcase " Search is case-sensitive if there is an uppercase letter
 
 au TermOpen * tnoremap <Esc> <c-\><c-n>
+
+lua << EOF
+dump = function(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+EOF
 
 " == FILE TYPES ==
 " We use .hm/.hmm for Objective-C/C++ headers
@@ -289,6 +307,8 @@ endif
 " == ASYNC TASK ==
 if !exists('g:vscode')
     nnoremap <silent> <leader>r :AsyncTask run<CR>
+    " Lowercase 'b' used for breakpoints
+    nnoremap <silent> <leader>B :AsyncTask build<CR>
 endif
 
 " == COC ==
@@ -324,12 +344,100 @@ endif
 " Mapping for switch header/source
 nnoremap <silent> <leader>o :CocCommand clangd.switchSourceHeader<CR>
 
-" Map next/previous error
+" Diagnostics
 nnoremap <silent> <leader>e <Plug>(coc-diagnostic-next-error)
 nnoremap <silent> <leader>E <Plug>(coc-diagnostic-prev-error)
+nnoremap <silent><nowait> <space>ca :<C-u>CocList diagnostics<CR>
+
+" Rename
+nnoremap <leader>cn <Plug>(coc-rename)
+
+" go-to code navigation
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Documentation
+function! ShowDocumentation()
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
+endfunction
+
+nnoremap <silent> K :call ShowDocumentation()<CR>
 
 " Syntax highlighting
 let g:coc_default_semantic_highlight_groups = 1
+
+" == DAP ==
+lua << EOF
+if not vim.g.vscode then
+    local dap = require('dap')
+    dap.adapters.codelldb = {
+        type = 'server',
+        port = "${port}",
+        executable = {
+            -- @todo Is there a way we can not depend on VSCode to supply codelldb?
+            command = '/Users/philiprader/.vscode/extensions/vadimcn.vscode-lldb-1.9.0/adapter/codelldb',
+            args = {"--port", "${port}"},
+
+            -- This may have to be uncommended on Windows
+            -- detatched = false,
+        }
+    }
+
+    --dap_continue = function()
+    --    if vim.fn.filereadable('.vim/dap_launch.json') ~= 0 then
+    --        require('dap.ext.vscode').load_launchjs('.vim/dap_launch.json')
+    --        print("Preparing to dump")
+    --        local dap = require('dap')
+    --        require('dap').run(dap.configurations.codelldb)
+    --        return
+    --    end
+    --    print(".vim/dap_launch.json does not exist.")
+    --end
+end
+EOF
+if !exists('g:vscode')
+    " Define custom signs for nvim-dap
+    sign define DapBreakpoint text=● texthl=DebugBreakpoint linehl= numhl=
+    sign define DapBreakpointCondition text=○ texthl=DebugBreakpoint linehl= numhl=
+    sign define DapLogPoint text=✎ texthl=DebugLogpoint linehl= numhl=
+    sign define DapStopped text=■ texthl=DebugStopped linehl= numhl=
+    sign define DapBreakpointRejected text=✘ texthl=DebugBreakpointRejected linehl= numhl=
+
+    " https://github.com/mfussenegger/nvim-dap/blob/7389e85233e3483b31b6a1c4ba69cda77336b7a8/doc/dap.txt#L469
+    nnoremap <leader>R :lua require'dap'.continue()<CR>
+    nnoremap <leader>dq :lua require'dap'.terminate()<CR>
+    nnoremap <leader>di :lua require'dap'.step_into()<CR>
+    nnoremap <leader>do :lua require'dap'.step_out()<CR>
+    nnoremap <C-5>do :lua require'dap'.step_over()<CR>
+    nnoremap <leader>du :lua require'dap'.up()<CR>
+    nnoremap <leader>dd :lua require'dap'.down()<CR>
+    nnoremap <silent> <leader>b :lua require'dap'.toggle_breakpoint()<CR>
+endif
+
+" == DAPUI ==
+lua << EOF
+if not vim.g.vscode then
+    local dap = require('dap')
+    local dapui = require('dapui')
+    dapui.setup()
+    dap.listeners.after.event_initialized["dapui_config"] = function()
+        vim.cmd('NERDTreeClose')
+        dapui.open()
+    end
+    dap.listeners.after.event_terminated["dapui_config"] = function()
+        dapui.close()
+    end
+    dap.listeners.after.event_exited["dapui_config"] = function()
+        dapui.close()
+    end
+end
+EOF
 
 " == FLOATERM ==
 nnoremap <silent> ` :FloatermToggle<CR>
@@ -364,4 +472,8 @@ if !exists('g:vscode')
         let g:lightline.colorscheme = "onehalfdark"
     endif
 endif
+
+" == EXRC == (MUST GO LAST)
+" Read more: https://alpha2phi.medium.com/vim-neovim-managing-multiple-project-settings-b5b6a3a94dd0
+set exrc
 
