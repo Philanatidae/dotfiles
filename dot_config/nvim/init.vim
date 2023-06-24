@@ -457,7 +457,8 @@ if !exists('g:vscode')
     nnoremap <leader>dq :lua require'dap'.terminate()<CR>
     nnoremap <leader>di :lua require'dap'.step_into()<CR>
     nnoremap <leader>do :lua require'dap'.step_out()<CR>
-    nnoremap <C-5>do :lua require'dap'.step_over()<CR>
+    " TODO F5 needs to be rebound because iPad's don't have F5
+    nnoremap <F5>do :lua require'dap'.step_over()<CR>
     nnoremap <leader>du :lua require'dap'.up()<CR>
     nnoremap <leader>dd :lua require'dap'.down()<CR>
     nnoremap <leader>df :lua require'dap'.focus_frame()<CR>
