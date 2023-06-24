@@ -89,6 +89,8 @@ call plug#begin()
     Plug 'chaoren/vim-wordmotion' " Better 'word' (w/b) motions
 
     Plug 'folke/todo-comments.nvim' " todo comment highlight & search
+
+    " Plug 'github/copilot.vim' " GitHub Copilot
 call plug#end()
 
 " == GLOBAL CONFIG ==
