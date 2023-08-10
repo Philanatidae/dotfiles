@@ -75,8 +75,12 @@ call plug#begin()
     Plug 'zefei/vim-wintabs', Cond(!exists('g:vscode')) " Tabs for windows
     Plug 'zefei/vim-wintabs-powerline', Cond(!exists('g:vscode')) " Enables powerline fonts for vim-wintabs
 
-    Plug 'neoclide/coc.nvim', {'branch': 'release'} " Completion engine
-    Plug 'josa42/vim-lightline-coc', Cond(!exists('g:vscode')) " CoC lightline helpers
+    Plug 'williamboman/mason.nvim' " LSP server management
+    Plug 'williamboman/mason-lspconfig.nvim' " Bridge mason-lspconfig to nvim-lspconfig
+    Plug 'neovim/nvim-lspconfig' " Config between nvim/lsp server
+    Plug 'ms-jpq/coq_nvim', {'branch': 'coq'} " Auto-completion
+    Plug 'josa42/nvim-lightline-lsp', Cond(!exists('g:vscode')) " LSP diagnostics for lightline
+    Plug 'nvim-lua/lsp-status.nvim', Cond(!exists('g:vscode')) " Helper for generating statusline components
 
     Plug 'voldikss/vim-floaterm', Cond(!exists('g:vscode')) " Floating terminal
 
@@ -230,40 +234,24 @@ endif
 
 " == LIGHT LINE ==
 if !exists('g:vscode')
-    function! CocCurrentFunction()
-        return get(b:, 'coc_current_function', '')
-    endfunction
-
     set noshowmode " Lightline shows mode on left side, we don't need this in the command section
 
     let g:lightline = {}
     let g:lightline.enable = { 'statusline': 0, 'tabline': 0 } " Disable both; WinTabs will handle rendering
 
-    let g:lightline.component_function = {
-        \   'cocstatus': 'coc#status',
-        \   'currentfunction': 'CocCurrentFunction' 
-        \ }
-
     function! DevIconsFiletype()
         return strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : ''
     endfunction
 
+    let g:lightline.component_function = {}
     let g:lightline.component_function.filetype = 'DevIconsFiletype'
 
-    call lightline#coc#register() " Register CoC-lightline components
-    " @todo coc_errors keeps showing up with the wrong color.
-    let g:lightline.component_type = {
-        \   'coc_warnings': 'warning',
-        \   'coc_errors': 'error',
-        \   'coc_info': 'info',
-        \   'coc_hints': 'hints',
-        \   'coc_ok': 'left',
-        \ }
+    call lightline#lsp#register() " Register LSP components
 
     let g:lightline.active = {
         \ 'left': [ [ 'mode', 'paste' ],
-        \           ['coc_warnings', 'coc_errors', 'coc_ok'],
-        \           ['coc_status' ] ],
+        \            [ 'lsp_warnings', 'lsp_errors', 'lsp_ok' ],
+        \            [ 'lsp_status' ] ],
         \ 'right': [ [ 'lineinfo' ],
         \            [ 'percent' ],
         \            [ 'readonly' ],
@@ -275,9 +263,6 @@ if !exists('g:vscode')
     let g:lightline.tabline = {
         \ 'left': [ [ 'tabs' ] ],
         \ 'right': [ [ 'close' ] ] }
-
-    autocmd User CocStatusChange,CocDiagnosticChange WintabsRefresh
-
 endif
 
 " == NERD TREE ==
@@ -356,66 +341,118 @@ if !exists('g:vscode')
     nnoremap <silent> <leader>B :AsyncTask build<CR>
 endif
 
+" == LSP ==
+lua << EOF
+
+require('mason').setup()
+require('mason-lspconfig').setup({
+    -- My commonly used LSPs
+    ensure_installed = {
+        'clangd', -- C/C++/ObjC/ObjC++
+        'cssls', -- CSS
+        'html', -- HTML
+        'lua_ls', -- LUA
+        'svelte', -- Svelte
+        'tsserver', -- TypeScript/JavaScript
+        'vimls' -- VimScript
+    }
+})
+
+-- coq_nvim provides auto-complete
+-- Must be configured before LSP is configured
+-- Manual keybindings are done in VimScript later down
+vim.g.coq_settings = {
+     auto_start = 'shut-up',
+     ['display.icons.mode'] = 'none',
+     keymap = {
+         recommended = false,
+         pre_select = true,
+         manual_complete = '<c-space>',
+         ['repeat'] = nil,
+         bigger_preview = nil,
+         jump_to_mark = nil,
+         eval_snips = nil,
+         manual_complete_insertion_only = true
+     }
+}
+local coq = require('coq')
+
+-- Individual config for each LSP
+local lsp = require('lspconfig')
+lsp.clangd.setup(coq.lsp_ensure_capabilities({}))
+lsp.cssls.setup(coq.lsp_ensure_capabilities({}))
+lsp.html.setup(coq.lsp_ensure_capabilities({}))
+lsp.lua_ls.setup(coq.lsp_ensure_capabilities({}))
+lsp.svelte.setup(coq.lsp_ensure_capabilities({}))
+lsp.tsserver.setup(coq.lsp_ensure_capabilities({}))
+lsp.vimls.setup(coq.lsp_ensure_capabilities({}))
+
+EOF
+
+inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<BS>"
+inoremap <silent><expr> <CR> pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"
+
 " == COC ==
-" From coc.vim README
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: There's always complete item selected by default, you may want to enable
-" no select by `"suggest.noselect": true` in your configuration file.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+" " From coc.vim README
+" " Use tab for trigger completion with characters ahead and navigate.
+" " NOTE: There's always complete item selected by default, you may want to enable
+" " no select by `"suggest.noselect": true` in your configuration file.
+" " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" " other plugin before putting this into your config.
+" inoremap <silent><expr> <TAB>
+"       \ coc#pum#visible() ? coc#pum#next(1) :
+"       \ CheckBackspace() ? "\<Tab>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-" Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" " Make <CR> to accept selected completion item or notify coc.nvim to format
+" " <C-g>u breaks current undo, please make your own choice.
+" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" function! CheckBackspace() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
+" " Use <c-space> to trigger completion.
+" if has('nvim')
+"   inoremap <silent><expr> <c-space> coc#refresh()
+" else
+"   inoremap <silent><expr> <c-@> coc#refresh()
+" endif
 
-" Mapping for switch header/source
-nnoremap <silent> <leader>o :CocCommand clangd.switchSourceHeader<CR>
+" " Mapping for switch header/source
+" nnoremap <silent> <leader>o :CocCommand clangd.switchSourceHeader<CR>
 
-" Diagnostics
-nnoremap <silent> <leader>e <Plug>(coc-diagnostic-next-error)
-nnoremap <silent> <leader>E <Plug>(coc-diagnostic-prev-error)
-nnoremap <silent><nowait> <space>ca :<C-u>CocList diagnostics<CR>
+" " Diagnostics
+" nnoremap <silent> <leader>e <Plug>(coc-diagnostic-next-error)
+" nnoremap <silent> <leader>E <Plug>(coc-diagnostic-prev-error)
+" nnoremap <silent><nowait> <space>ca :<C-u>CocList diagnostics<CR>
 
-" Rename
-nnoremap <leader>cn <Plug>(coc-rename)
+" " Rename
+" nnoremap <leader>cn <Plug>(coc-rename)
 
-" go-to code navigation
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" " go-to code navigation
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
 
 " Documentation
-function! ShowDocumentation()
-  if CocAction('hasProvider', 'hover')
-    call CocActionAsync('doHover')
-  else
-    call feedkeys('K', 'in')
-  endif
-endfunction
+" function! ShowDocumentation()
+"   if CocAction('hasProvider', 'hover')
+"     call CocActionAsync('doHover')
+"   else
+"     call feedkeys('K', 'in')
+"   endif
+" endfunction
 
-nnoremap <silent> K :call ShowDocumentation()<CR>
+" nnoremap <silent> K :call ShowDocumentation()<CR>
 
-" Syntax highlighting
-let g:coc_default_semantic_highlight_groups = 1
+" " Syntax highlighting
+" let g:coc_default_semantic_highlight_groups = 1
 
 " == DAP ==
 lua << EOF
