@@ -78,7 +78,12 @@ call plug#begin()
     Plug 'williamboman/mason.nvim' " LSP server management
     Plug 'williamboman/mason-lspconfig.nvim' " Bridge mason-lspconfig to nvim-lspconfig
     Plug 'neovim/nvim-lspconfig' " Config between nvim/lsp server
-    Plug 'ms-jpq/coq_nvim', {'branch': 'coq'} " Auto-completion
+    Plug 'hrsh7th/cmp-nvim-lsp' " LSP source for nvim-cmp
+    Plug 'hrsh7th/cmp-buffer' " Buffer source for nvim-cmp
+    Plug 'hrsh7th/cmp-path' " Path source for nvim-cmp
+    Plug 'SirVer/ultisnips' " Ultisnips source for nvim-cmp
+    Plug 'hrsh7th/nvim-cmp' " Auto-completion
+
     Plug 'josa42/nvim-lightline-lsp', Cond(!exists('g:vscode')) " LSP diagnostics for lightline
     Plug 'nvim-lua/lsp-status.nvim', Cond(!exists('g:vscode')) " Helper for generating statusline components
 
@@ -358,34 +363,63 @@ require('mason-lspconfig').setup({
     }
 })
 
--- coq_nvim provides auto-complete
--- Must be configured before LSP is configured
--- Manual keybindings are done in VimScript later down
-vim.g.coq_settings = {
-     auto_start = 'shut-up',
-     ['display.icons.mode'] = 'none',
-     keymap = {
-         recommended = false,
-         pre_select = true,
-         manual_complete = '<c-space>',
-         ['repeat'] = nil,
-         bigger_preview = nil,
-         jump_to_mark = nil,
-         eval_snips = nil,
-         manual_complete_insertion_only = true
-     }
-}
-local coq = require('coq')
+-- nvim-cmp (Autocomplete)
+-- TODO Move to its own section
+local cmp = require('cmp')
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            vim.fn["UltiSnips#Anon"](args.body)
+        end,
+    },
+    window = {
+        completion = cmp.config.window.bordered(),
+        -- documentation = comp.config.window.bordered(),
+    },
+    preselect = require('cmp').PreselectMode.Item,
+    mapping = {
+        --['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        --['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        --['<C-e>'] = cmp.mapping.abort(),
+        ['<Esc>'] = cmp.mapping.abort(), -- Try like this, but will likely switch to leader combo if double hitting escape is too annoying (not sure how often it happens TBH)
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
+        ['<Tab>'] = cmp.mapping.select_next_item(),
+        ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    },
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+        { name = 'ultisnips' },
+    }, {
+        { name = 'buffer' },
+    })
+})
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Individual config for each LSP
 local lsp = require('lspconfig')
-lsp.clangd.setup(coq.lsp_ensure_capabilities({}))
-lsp.cssls.setup(coq.lsp_ensure_capabilities({}))
-lsp.html.setup(coq.lsp_ensure_capabilities({}))
-lsp.lua_ls.setup(coq.lsp_ensure_capabilities({}))
-lsp.svelte.setup(coq.lsp_ensure_capabilities({}))
-lsp.tsserver.setup(coq.lsp_ensure_capabilities({}))
-lsp.vimls.setup(coq.lsp_ensure_capabilities({}))
+lsp.clangd.setup({
+    capabilities = capabilities
+})
+lsp.cssls.setup({
+    capabilities = capabilities
+})
+lsp.html.setup({
+    capabilities = capabilities
+})
+lsp.lua_ls.setup({
+    capabilities = capabilities
+})
+lsp.svelte.setup({
+    capabilities = capabilities
+})
+lsp.tsserver.setup({
+    capabilities = capabilities
+})
+lsp.vimls.setup({
+    capabilities = capabilities
+})
 
 EOF
 
