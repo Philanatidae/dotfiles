@@ -248,6 +248,9 @@ if !exists('g:vscode')
         return strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : ''
     endfunction
 
+    let g:lightline.component = {}
+    let g:lightline.component.relativepath = '%f'
+    
     let g:lightline.component_function = {}
     let g:lightline.component_function.filetype = 'DevIconsFiletype'
 
@@ -260,7 +263,8 @@ if !exists('g:vscode')
         \ 'right': [ [ 'lineinfo' ],
         \            [ 'percent' ],
         \            [ 'readonly' ],
-        \            [ 'filetype' ] ] }
+        \            [ 'filetype' ],
+        \            ['relativepath'] ] }
     let g:lightline.inactive = {
         \ 'left': [ [ 'filename' ] ],
         \ 'right': [ [ 'lineinfo' ],
