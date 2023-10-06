@@ -49,6 +49,8 @@ function! Cond(Cond, ...)
   return a:Cond ? opts : extend(opts, { 'on': [], 'for': [] })
 endfunction
 
+" Note: default plugin installation path is `stdpath('data')/plugged`
+" `stdpath('data')` can be found by calling `:echo stdpath('data')`
 call plug#begin()
     Plug 'sonph/onehalf', Cond(!exists('g:vscode'), { 'rtp': 'vim' }) " Theme (no 24-bit color)
     Plug 'EdenEast/nightfox.nvim', Cond(!exists('g:vscode')) " Theme (24-bit color, preferred)
