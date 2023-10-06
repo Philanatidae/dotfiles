@@ -254,6 +254,7 @@ if !exists('g:vscode')
 
     let g:lightline.component = {}
     let g:lightline.component.relativepath = '%f'
+    let g:lightline.component.time = '%{strftime(''%l:%M %p'')}'
     
     let g:lightline.component_function = {}
     let g:lightline.component_function.filetype = 'DevIconsFiletype'
@@ -266,6 +267,7 @@ if !exists('g:vscode')
         \            [ 'lsp_status' ] ],
         \ 'right': [ [ 'lineinfo' ],
         \            [ 'percent' ],
+        \            [ 'time' ],
         \            [ 'readonly' ],
         \            [ 'filetype' ],
         \            ['relativepath'] ] }
@@ -276,6 +278,16 @@ if !exists('g:vscode')
     let g:lightline.tabline = {
         \ 'left': [ [ 'tabs' ] ],
         \ 'right': [ [ 'close' ] ] }
+
+    " Update lightline once per second, for updating the clock if there is no
+    " user interation
+    function! UpdateLightline(timer)
+        call lightline#update()
+        execute 'WintabsRefresh'
+    endfunction
+
+    " Set the timer to call the UpdateLightline function once per second
+    let g:lightline_update_timer = timer_start(1000, 'UpdateLightline', {'repeat': -1})
 endif
 
 " == NERD TREE ==
