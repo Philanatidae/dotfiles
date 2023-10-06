@@ -120,6 +120,8 @@ set expandtab
 set shiftwidth=4
 set autoindent
 
+set mouse=a
+
 filetype plugin indent on
 
 "set clipboard=unnamedplus " Use global clipboard
