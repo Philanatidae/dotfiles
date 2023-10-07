@@ -140,6 +140,7 @@ augroup END
 set ignorecase
 set smartcase " Search is case-sensitive if there is an uppercase letter
 
+" Map escape to terminal escape sequence. Doesn't work reliably, though.
 au TermOpen * tnoremap <Esc> <c-\><c-n>
 
 lua << EOF
