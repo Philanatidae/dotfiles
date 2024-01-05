@@ -53,7 +53,9 @@ endfunction
 " `stdpath('data')` can be found by calling `:echo stdpath('data')`
 call plug#begin()
     Plug 'sonph/onehalf', Cond(!exists('g:vscode'), { 'rtp': 'vim' }) " Theme (no 24-bit color)
-    Plug 'EdenEast/nightfox.nvim', Cond(!exists('g:vscode')) " Theme (24-bit color, preferred)
+    Plug 'EdenEast/nightfox.nvim', Cond(!exists('g:vscode')) " Theme (24-bit color)
+    Plug 'miikanissi/modus-themes.nvim', Cond(!exists('g:vscode')) " Theme (24-bit color)
+    Plug 'bignimbus/pop-punk.vim', Cond(!exists('g:vscode')) " Theme (24-bit color)
 
     Plug 'xolox/vim-misc' " Dependency for vim-session
     Plug 'xolox/vim-session', Cond(!exists('g:vscode')) " Automatic sessions (may work with VSCode, not yet sure)
@@ -447,6 +449,10 @@ inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <silent><expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<BS>"
 inoremap <silent><expr> <CR> pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"
 
+nnoremap <silent> gD :lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gd :lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <leader>o :ClangdSwitchSourceHeader<CR>
+
 " == COC ==
 " " From coc.vim README
 " " Use tab for trigger completion with characters ahead and navigate.
@@ -612,8 +618,19 @@ if !exists('g:vscode')
     if (has("termguicolors"))
         set termguicolors
 
-        colorscheme nightfox
-        let g:lightline.colorscheme = "nightfox"
+        "colorscheme nightfox
+        "let g:lightline.colorscheme = "nightfox"
+
+        " onehalflight is WAY too bright...
+        "colorscheme onehalflight
+        "let g:lightline.colorscheme = "onehalflight"
+        
+        "colorscheme modus Doesn't work correctly, don't want to bother
+        "let g:lightline.colorscheme = "modus"
+        
+        colorscheme pop-punk
+        "let g:terminal_ansi_colors = pop_punk#AnsiColors()
+        let g:lightline.colorscheme = 'pop_punk'
     else
         colorscheme onehalfdark
         let g:lightline.colorscheme = "onehalfdark"
