@@ -1,4 +1,4 @@
 # dotfiles
-Configuration files for command line utilities.
+My configuration files for command line utilities.
 
-Requires [chezmoi](https://www.chezmoi.io).
+Requires GNU stow.
