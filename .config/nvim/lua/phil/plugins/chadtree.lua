@@ -1,9 +1,15 @@
 return {
     "ms-jpq/chadtree",
+    enabled = true,
+    lazy = true,
     branch = "chad",
     cond = not vim.g.vscode,
     build = "python3 -m chadtree deps",
-    config = function()
+    cmd = "CHADopen",
+    keys = {
+        { "<C-t>", "<cmd>CHADopen<CR>", "CHADtree open" },
+    },
+    init = function()
         vim.g.chadtree_settings = {
             view = {
                 window_options = {
@@ -12,7 +18,5 @@ return {
                 }
             }
         }
-
-        vim.keymap.set("n", "<C-t>", ":CHADopen<CR>")
     end
 }

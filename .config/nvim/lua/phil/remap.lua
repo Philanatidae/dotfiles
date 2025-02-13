@@ -55,10 +55,15 @@ else
     vim.keymap.set("n", "<leader>j", ":<C-u>exe ':wincmd ' . v:count1 . 'j'<CR>")
     vim.keymap.set("n", "<leader>h", ":<C-u>exe ':wincmd ' . v:count1 . 'h'<CR>")
 
+    -- @todo Make a sticky note of this, there's ZERO chance I remember this
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
     vim.keymap.set("n", "<leader>e", function() vim.diagnostic.open_float() end)
 
+    vim.keymap.set('i', '<C-c>', '<Nop>')
+    vim.keymap.set('v', '<C-c>', '<Nop>')
+
+    -- @todo The heck do these even do?
     vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
     vim.keymap.set("v", "J", ":m '<-2<CR>gv=gv")
 
@@ -73,3 +78,9 @@ end
 vim.keymap.set("n", "U", function()
     vim.cmd("redo")
 end)
+
+-- Move lines up and down
+-- @todo These don't work for some reason, at least on iterm 2
+vim.keymap.set("n", "<A-k>", ":m .-2<CR>==", { noremap = true, silent = true })
+vim.keymap.set("x", "<A-j>", ":m '>+1<CR>gv=gv", { noremap = true, silent = true })
+vim.keymap.set("x", "<A-k>", ":m '<-2<CR>gv=gv", { noremap = true, silent = true })

@@ -1,6 +1,7 @@
 return {
     "folke/trouble.nvim",
-    cond = not vim.g.vscode,
+    enabled = false,
+    lazy = true,
     dependencies = {
         "nvim-tree/nvim-web-devicons",
     },
@@ -38,21 +39,4 @@ return {
             desc = "Quickfix List (Trouble)",
         },
     },
-    -- config = function()
-    --     require("trouble").setup()
-
-    --     vim.keymap.set("n", "<leader>tt", function()
-    --         require("trouble").toggle()
-    --     end)
-
-    --     vim.keymap.set("n", "[t", function()
-    --         require("trouble").open()
-    --         require("trouble").next({ skip_groups = true, jump = true })
-    --     end)
-
-    --     vim.keymap.set("n", "]t", function()
-    --         require("trouble").open()
-    --         require("trouble").previous({ skip_groups = true, jump = true })
-    --     end)
-    -- end
 }

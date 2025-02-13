@@ -12,6 +12,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-    spec = "phil.lazy",
-    change_detection = { notify = false },
+    spec = "phil.plugins",
+    rocks = { enabled = false },
+    change_detection = { -- This is more annoying than useful
+        enabled = false,
+        notify = false,
+    },
 })
