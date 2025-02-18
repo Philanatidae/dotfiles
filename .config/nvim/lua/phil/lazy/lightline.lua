@@ -12,13 +12,18 @@ return {
         vim.opt.showmode = false -- Lightline shows mode, so we don't need this in the command section
 
         vim.cmd([[
-            function! DevIconsFiletype()
-                return strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : ''
-            endfunction
-        ]])
+                    function! DevIconsFiletype()
+                        return strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : ''
+                    endfunction
+                ]])
+
+        vim.cmd([[
+                    let s:palette = v:lua.require('phil.lightline.colorscheme.nightowl')
+                    let g:lightline#colorscheme#nightowl#palette = lightline#colorscheme#fill(s:palette)
+                ]])
 
         vim.g.lightline = {
-            colorscheme = "pop_punk",
+            colorscheme = "nightowl",
             enable = {
                 statusline = 0, -- Wintabs will handle rendering
                 tabline = 0,
@@ -32,7 +37,7 @@ return {
             },
             active = {
                 left = {
-                    { "mode", "paste" },
+                    { "mode",         "paste" },
                     { "lsp_warnings", "lsp_errors", "lsp_ok" },
                 },
                 right = {
