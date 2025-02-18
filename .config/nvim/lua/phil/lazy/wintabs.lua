@@ -7,10 +7,11 @@ return {
             "itchyny/lightline.vim",
         },
         config = function()
-            vim.g.wintabs_display = "statusline" -- Put wintabs on the status line, move lightline to the tabline (WinTabs is already configured for this)
+            vim.g.wintabs_display =
+            "statusline"                         -- Put wintabs on the status line, move lightline to the tabline (WinTabs is already configured for this)
             --vim.g.wintabs_ignored_filetypes = ["gitcommit", "vundle", "qf", "vimfiler"]
             vim.cmd('WintabsRefresh')
-            
+
             vim.keymap.set("n", "<leader>]", "<cmd>WintabsNext<CR>")
             vim.keymap.set("n", "<leader>[", "<cmd>WintabsPrevious<CR>")
 
