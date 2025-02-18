@@ -28,6 +28,9 @@ return {
             ensure_installed = {
                 "clangd", "lua_ls", "cmake", "html", "pylsp",
             },
+            automatic_installation = {
+                exclude = { "clangd" } -- Always use local copy
+            },
             handlers = {
                 function(server_name) -- default handler
                     require("lspconfig")[server_name].setup({
@@ -48,7 +51,19 @@ return {
                             }
                         }
                     })
-                end
+                end,
+                ["clangd"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.clangd.setup({
+                        capabilities = capabilities,
+                        cmd = {
+                            "clangd",                                                                    -- On macOS, switch to Xcode included clangd
+                            "--background-index",
+                            "--compile-commands-dir=/Users/philiprader/Developer/Git/FFBrickGame/ebuild" -- This is the way it works for some reason?
+                            -- "--compile-commands-dir=./esbuild", -- Test, we need a more permanent config for this
+                        }
+                    })
+                end,
             }
         })
 
