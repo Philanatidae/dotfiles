@@ -4,15 +4,28 @@ return {
     dependencies = {
         "nvim-lua/plenary.nvim"
     },
-    config = function()
-        require('telescope').setup({})
-
-        local builtin = require('telescope.builtin')
-        -- Future reference: https://github.com/ThePrimeagen/neovimrc/blob/master/lua/theprimeagen/lazy/telescope.lua
-        vim.keymap.set('n', '<leader>s', builtin.find_files, {})
-        vim.keymap.set('n', '<leader>S', function()
-            builtin.grep_string({ search = vim.fn.input("Grep > ") })
-        end)
-        vim.keymap.set('n', '<leader>vh', builtin.help_tags, {})
-    end
+    keys = {
+        {
+            "<leader>s",
+            function()
+                require("telescope.builtin").find_files()
+            end,
+            "Search project files"
+        },
+        {
+            "<leader>Ss",
+            function()
+                local builtin = require("telescope.builtin")
+                builtin.grep_string({ search = vim.fn.input("Grep > ") })
+            end,
+            "Search content in files"
+        },
+        {
+            "<leader>Sh",
+            function()
+                require("telescope.builtin").help_tags()
+            end,
+            "Search help tags"
+        },
+    },
 }
