@@ -1,13 +1,13 @@
 return {
     {
         "zefei/vim-wintabs",
+        -- WinTabs is essential for how my neovim looks
+        lazy = false,
         cond = not vim.g.vscode,
         dependencies = {
             "zefei/vim-wintabs-powerline",
             "itchyny/lightline.vim",
         },
-        -- WinTabs is essential for how my neovim looks
-        lazy = false,
         config = function()
             vim.g.wintabs_display =
             "statusline"                         -- Put wintabs on the status line, move lightline to the tabline (WinTabs is already configured for this)

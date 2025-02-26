@@ -1,5 +1,6 @@
 return {
     "ms-jpq/chadtree",
+    lazy = true,
     branch = "chad",
     cond = not vim.g.vscode,
     build = "python3 -m chadtree deps",

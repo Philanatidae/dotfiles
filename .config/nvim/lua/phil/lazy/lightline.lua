@@ -1,5 +1,6 @@
 return {
     "itchyny/lightline.vim",
+    lazy = false,
     cond = not vim.g.vscode,
     priority = 100,
     dependencies = {

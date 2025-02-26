@@ -1,5 +1,6 @@
 return {
     "neovim/nvim-lspconfig",
+    lazy = false,
     cond = not vim.g.vscode,
     dependencies = {
         "williamboman/mason.nvim",
