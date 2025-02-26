@@ -6,6 +6,8 @@ return {
             "zefei/vim-wintabs-powerline",
             "itchyny/lightline.vim",
         },
+        -- WinTabs is essential for how my neovim looks
+        lazy = false,
         config = function()
             vim.g.wintabs_display =
             "statusline"                         -- Put wintabs on the status line, move lightline to the tabline (WinTabs is already configured for this)
@@ -46,6 +48,7 @@ return {
                     call UpdateLightline()
                 endfunction
 
+                " @todo Only needed for clock, but we could move the clock to tmux?
                 " Set the timer to call the UpdateLightline function once per second
                 let g:lightline_update_timer = timer_start(1000, 'UpdateLightlinePeriodically', {'repeat': -1})
 
