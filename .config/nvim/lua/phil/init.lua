@@ -7,7 +7,7 @@ require("phil.lazy")
 
 local PhilGroup = vim.api.nvim_create_augroup("Phil", {})
 
--- Why is this not in lsp.lua?
+-- @todo Why is this not in lsp.lua?
 vim.api.nvim_create_autocmd("LspAttach", {
     group = PhilGroup,
     callback = function(e)
@@ -24,5 +24,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         -- vim.keymap.set("n", "<leader>lr", function() vim.lsp.buf.references() end, opts)
 
         vim.keymap.set("n", "<leader>o", ":ClangdSwitchSourceHeader<CR>", opts)
+
+        vim.lsp.inlay_hint.enable(true)
     end
 })
