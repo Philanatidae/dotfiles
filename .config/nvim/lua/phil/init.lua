@@ -2,11 +2,12 @@ require("phil.set")
 require("phil.remap")
 require("phil.filetypes")
 
-require("phil.lazy_init")
+require("phil.lazy")
 
 
 local PhilGroup = vim.api.nvim_create_augroup("Phil", {})
 
+-- Why is this not in lsp.lua?
 vim.api.nvim_create_autocmd("LspAttach", {
     group = PhilGroup,
     callback = function(e)
