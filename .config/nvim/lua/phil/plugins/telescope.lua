@@ -6,6 +6,7 @@ return {
         "nvim-telescope/telescope.nvim",
         "nvim-lua/plenary.nvim",
         { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+        "nvim-telescope/telescope-ui-select.nvim",
     },
     cmd = "Telescope",
     keys = {
@@ -40,6 +41,8 @@ return {
             local actions = require("telescope.actions")
             local selection = require("telescope.actions.state").get_selected_entry()
             -- From https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e94f29d800f582f317bb25f986c2cf487c9dec7f/lua/telescope/_extensions/file_browser/actions.lua#L69
+            -- @todo Doing this on a file name should have the path to the file name
+            -- but instead it thinks the file name is a directory.
             local Path = require("plenary.path")
             local os_sep = Path.path.sep
             local default = selection.path .. os_sep
@@ -100,11 +103,12 @@ return {
                             ["t"] = false,
                         },
                     }
-                }
+                },
             }
         })
 
         require("telescope").load_extension("fzf")
         require("telescope").load_extension("file_browser")
+        require("telescope").load_extension("ui-select")
     end
 }
