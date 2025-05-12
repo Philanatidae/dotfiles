@@ -59,6 +59,10 @@ else
     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
     vim.keymap.set("n", "<leader>e", function() vim.diagnostic.open_float() end)
 
+    vim.keymap.set('i', '<C-c>', '<Nop>')
+    vim.keymap.set('v', '<C-c>', '<Nop>')
+
+    -- @todo The heck do these even do?
     vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
     vim.keymap.set("v", "J", ":m '<-2<CR>gv=gv")
 
