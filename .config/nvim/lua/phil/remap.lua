@@ -55,6 +55,7 @@ else
     vim.keymap.set("n", "<leader>j", ":<C-u>exe ':wincmd ' . v:count1 . 'j'<CR>")
     vim.keymap.set("n", "<leader>h", ":<C-u>exe ':wincmd ' . v:count1 . 'h'<CR>")
 
+    -- @todo Make a sticky note of this, there's ZERO chance I remember this
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set("n", "]d", function() vim.diagnostic.goto_prev() end, opts)
     vim.keymap.set("n", "<leader>e", function() vim.diagnostic.open_float() end)
