@@ -2,15 +2,15 @@ return {
     {
         "zefei/vim-wintabs",
         -- WinTabs is essential for how my neovim looks
+        enabled = true,
         lazy = false,
         cond = not vim.g.vscode,
+        priority = 99,
         dependencies = {
             "zefei/vim-wintabs-powerline",
-            "itchyny/lightline.vim",
         },
         config = function()
-            vim.g.wintabs_display =
-            "statusline"                         -- Put wintabs on the status line, move lightline to the tabline (WinTabs is already configured for this)
+            vim.g.wintabs_display = "statusline" -- Put wintabs on the status line, move statusline to the tabline (WinTabs is already configured for this)
             --vim.g.wintabs_ignored_filetypes = ["gitcommit", "vundle", "qf", "vimfiler"]
             vim.cmd('WintabsRefresh')
 
@@ -37,26 +37,35 @@ return {
             vim.keymap.set("n", "<leader>J", "<cmd>WintabsMoveToWindow j<CR>")
 
             vim.cmd([[
-                function! UpdateLightline()
-                    call lightline#update()
-                    execute 'WintabsRefresh'
+                function! UpdateStatusLine()
+                    if exists('g:lightline')
+                        call lightline#update()
+                        execute 'WintabsRefresh'
+                    else
+lua <<EOF
+                        local lualine = require('lualine')
+                        if lualine then
+                            lualine.refresh()
+                        end
+EOF
+                    endif
                 endfunction
 
-                " Update lightline once per second, for updating the clock if there is no
+                " Update status line once per second, for updating the clock if there is no
                 " user interation
-                function! UpdateLightlinePeriodically(timer)
-                    call UpdateLightline()
+                function! UpdateStatusLinePeriodically(timer)
+                    call UpdateStatusLine()
                 endfunction
 
                 " @todo Only needed for clock, but we could move the clock to tmux?
-                " Set the timer to call the UpdateLightline function once per second
-                let g:lightline_update_timer = timer_start(1000, 'UpdateLightlinePeriodically', {'repeat': -1})
+                " Set the timer to call the UpdateStatusLine function once per second
+                let g:statusline_update_timer = timer_start(1000, 'UpdateStatusLinePeriodically', {'repeat': -1})
 
                 " Extra updates that are stubborn
                 augroup VisualEvent
                     autocmd!
-                    autocmd ModeChanged *:[vV\x16]* call UpdateLightline()
-                    autocmd Modechanged [vV\x16]*:* call UpdateLightline()
+                    autocmd ModeChanged *:[vV\x16]* call UpdateStatusLine()
+                    autocmd Modechanged [vV\x16]*:* call UpdateStatusLine()
                 augroup END
             ]])
         end
