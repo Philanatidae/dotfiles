@@ -38,15 +38,17 @@ return {
     },
     config = function()
         local file_create = function(prompt_bufnr)
+            -- Originally from https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e94f29d800f582f317bb25f986c2cf487c9dec7f/lua/telescope/_extensions/file_browser/actions.lua#L69
             local actions = require("telescope.actions")
             local selection = require("telescope.actions.state").get_selected_entry()
-            -- From https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e94f29d800f582f317bb25f986c2cf487c9dec7f/lua/telescope/_extensions/file_browser/actions.lua#L69
-            -- @todo Doing this on a file name should have the path to the file name
-            -- but instead it thinks the file name is a directory.
+            local selected_path = selection.path
             local Path = require("plenary.path")
             local os_sep = Path.path.sep
-            local default = selection.path .. os_sep
-            vim.ui.input({ prompt = "Insert the file name:\n", default = default }, function(file_path)
+            if vim.fn.isdirectory(selected_path) == 0 then
+                selected_path = Path:new(selected_path):parent().filename
+            end
+            selected_path = selected_path .. os_sep
+            vim.ui.input({ prompt = "Insert the file name:\n", default = selected_path }, function(file_path)
                 if not file_path then
                     return
                 end
@@ -96,6 +98,7 @@ return {
                             ["/"] = false,
                         },
                         ["n"] = {
+                            ["<S-CR>"] = file_create,
                             ["c"] = file_create,
                             ["g"] = false,
                             ["e"] = false,
