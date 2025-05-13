@@ -1,42 +1,41 @@
 return {
-    {
-        "zefei/vim-wintabs",
-        -- WinTabs is essential for how my neovim looks
-        enabled = true,
-        lazy = false,
-        cond = not vim.g.vscode,
-        priority = 99,
-        dependencies = {
-            "zefei/vim-wintabs-powerline",
-        },
-        config = function()
-            vim.g.wintabs_display = "statusline" -- Put wintabs on the status line, move statusline to the tabline (WinTabs is already configured for this)
-            --vim.g.wintabs_ignored_filetypes = ["gitcommit", "vundle", "qf", "vimfiler"]
-            vim.cmd('WintabsRefresh')
+    "zefei/vim-wintabs",
+    enabled = true,
+    lazy = false,
+    cond = not vim.g.vscode,
+    priority = 99,
+    dependencies = {
+        "zefei/vim-wintabs-powerline",
+    },
+    config = function()
+        vim.g.wintabs_display =
+        "statusline"                             -- Put wintabs on the status line, move statusline to the tabline (WinTabs is already configured for this)
+        --vim.g.wintabs_ignored_filetypes = ["gitcommit", "vundle", "qf", "vimfiler"]
+        vim.cmd('WintabsRefresh')
 
-            vim.keymap.set("n", "<leader>]", "<cmd>WintabsNext<CR>")
-            vim.keymap.set("n", "<leader>[", "<cmd>WintabsPrevious<CR>")
+        vim.keymap.set("n", "<leader>]", "<cmd>WintabsNext<CR>")
+        vim.keymap.set("n", "<leader>[", "<cmd>WintabsPrevious<CR>")
 
-            vim.keymap.set("n", "<leader>q", "<cmd>WintabsClose<CR>")
-            vim.keymap.set("n", "<leader>Q", "<cmd>WintabsCloseWindow<CR>")
+        vim.keymap.set("n", "<leader>q", "<cmd>WintabsClose<CR>")
+        vim.keymap.set("n", "<leader>Q", "<cmd>WintabsCloseWindow<CR>")
 
-            vim.keymap.set("n", "<leader><C-l>", function()
-                vim.cmd("vnew")
-                vim.cmd("wincmd h")
-                vim.cmd("WintabsMoveToWindow l")
-            end)
-            vim.keymap.set("n", "<leader><C-j>", function()
-                vim.cmd("new")
-                vim.cmd("wincmd k")
-                vim.cmd("WintabsMoveToWindow j")
-            end)
+        vim.keymap.set("n", "<leader><C-l>", function()
+            vim.cmd("vnew")
+            vim.cmd("wincmd h")
+            vim.cmd("WintabsMoveToWindow l")
+        end)
+        vim.keymap.set("n", "<leader><C-j>", function()
+            vim.cmd("new")
+            vim.cmd("wincmd k")
+            vim.cmd("WintabsMoveToWindow j")
+        end)
 
-            vim.keymap.set("n", "<leader>L", "<cmd>WintabsMoveToWindow l<CR>")
-            vim.keymap.set("n", "<leader>H", "<cmd>WintabsMoveToWindow h<CR>")
-            vim.keymap.set("n", "<leader>K", "<cmd>WintabsMoveToWindow k<CR>")
-            vim.keymap.set("n", "<leader>J", "<cmd>WintabsMoveToWindow j<CR>")
+        vim.keymap.set("n", "<leader>L", "<cmd>WintabsMoveToWindow l<CR>")
+        vim.keymap.set("n", "<leader>H", "<cmd>WintabsMoveToWindow h<CR>")
+        vim.keymap.set("n", "<leader>K", "<cmd>WintabsMoveToWindow k<CR>")
+        vim.keymap.set("n", "<leader>J", "<cmd>WintabsMoveToWindow j<CR>")
 
-            vim.cmd([[
+        vim.cmd([[
                 function! UpdateStatusLine()
                     if exists('g:lightline')
                         call lightline#update()
@@ -68,6 +67,5 @@ EOF
                     autocmd Modechanged [vV\x16]*:* call UpdateStatusLine()
                 augroup END
             ]])
-        end
-    }
+    end
 }

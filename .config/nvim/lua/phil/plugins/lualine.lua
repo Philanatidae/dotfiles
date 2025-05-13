@@ -1,7 +1,7 @@
 -- I can't get this working with wintabs right now
 return {
     "nvim-lualine/lualine.nvim",
-    enabled = falses,
+    enabled = false,
     lazy = false,
     cond = not vim.g.vscode,
     priority = 100,

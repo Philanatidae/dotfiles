@@ -1,5 +1,6 @@
 return {
     "folke/trouble.nvim",
+    enabled = false,
     lazy = true,
     cond = not vim.g.vscode,
     dependencies = {

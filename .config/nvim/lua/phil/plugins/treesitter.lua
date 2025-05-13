@@ -1,20 +1,23 @@
 return {
     "nvim-treesitter/nvim-treesitter",
-    lazy = false,
-    cond = not vim.g.vscode,
-    build = ":TSUpdate",
+    enabled = true,
     dependencies = {
         "nvim-treesitter/nvim-treesitter-textobjects",
     },
+    lazy = false,
+    cond = not vim.g.vscode,
+    build = ":TSUpdate",
     config = function()
+        -- Dart parser seems to be slow at starting:
+        -- https://github.com/nvim-treesitter/nvim-treesitter/issues/5868
         require("nvim-treesitter.configs").setup({
             ensure_installed = {
                 "c", "cmake", "cpp", "csv", "gitignore", "glsl",
                 "hlsl", "html", "ini", "javascript", "json",
                 "json5", "lua", "luadoc", "markdown", "objc",
-                "rust", "vim", "vimdoc",
+                "rust", "vim", "vimdoc", "dart",
             },
-            sync_install = false, -- No need for async installs
+            sync_install = false, -- No need for sync installs
             auto_install = true,
             indent = {
                 enable = true

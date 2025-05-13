@@ -1,5 +1,6 @@
 return {
     "ms-jpq/chadtree",
+    enabled = true,
     lazy = true,
     branch = "chad",
     cond = not vim.g.vscode,
