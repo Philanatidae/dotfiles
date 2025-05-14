@@ -1,9 +1,8 @@
 -- I can't get this working with wintabs right now
 return {
     "nvim-lualine/lualine.nvim",
-    enabled = false,
+    enabled = true,
     lazy = false,
-    cond = not vim.g.vscode,
     priority = 100,
     dependencies = {
         "nvim-tree/nvim-web-devicons",
@@ -25,9 +24,9 @@ return {
                 always_show_tabline = true,
                 globalstatus = false,
                 refresh = {
-                    statusline = 0,
-                    tabline = 0,
-                    winbar = 0,
+                    statusline = 200,
+                    tabline = 200,
+                    winbar = 200,
                 }
             },
             sections = {

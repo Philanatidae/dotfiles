@@ -1,8 +1,7 @@
 return {
     "itchyny/lightline.vim",
-    enabled = true,
+    enabled = false,
     lazy = false,
-    cond = not vim.g.vscode,
     priority = 100,
     dependencies = {
         "nvim-tree/nvim-web-devicons",

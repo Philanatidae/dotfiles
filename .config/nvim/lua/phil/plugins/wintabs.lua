@@ -2,12 +2,23 @@ return {
     "zefei/vim-wintabs",
     enabled = true,
     lazy = false,
-    cond = not vim.g.vscode,
+    -- Has to be after lightline/lualine,
+    -- use priority instead of dependency
+    -- to be able to selectively enable
     priority = 99,
     dependencies = {
         "zefei/vim-wintabs-powerline",
     },
     config = function()
+        local lualine = require('lualine')
+        if lualine then
+            -- Wintabs has this built-in for lightline
+            function _G.wintabs_statusline()
+                return lualine.statusline(lualine.get_config().sections, true)
+            end
+            vim.g.wintabs_statusline = '%!v:lua.wintabs_statusline()'
+        end
+
         vim.g.wintabs_display =
         "statusline"                             -- Put wintabs on the status line, move statusline to the tabline (WinTabs is already configured for this)
         --vim.g.wintabs_ignored_filetypes = ["gitcommit", "vundle", "qf", "vimfiler"]
@@ -18,6 +29,8 @@ return {
 
         vim.keymap.set("n", "<leader>q", "<cmd>WintabsClose<CR>")
         vim.keymap.set("n", "<leader>Q", "<cmd>WintabsCloseWindow<CR>")
+
+        vim.keymap.set('n', '<leader>O', '<cmd>WintabsOnly<CR>')
 
         vim.keymap.set("n", "<leader><C-l>", function()
             vim.cmd("vnew")
@@ -58,7 +71,7 @@ EOF
 
                 " @todo Only needed for clock, but we could move the clock to tmux?
                 " Set the timer to call the UpdateStatusLine function once per second
-                let g:statusline_update_timer = timer_start(1000, 'UpdateStatusLinePeriodically', {'repeat': -1})
+                "let g:statusline_update_timer = timer_start(1000, 'UpdateStatusLinePeriodically', {'repeat': -1})
 
                 " Extra updates that are stubborn
                 augroup VisualEvent
