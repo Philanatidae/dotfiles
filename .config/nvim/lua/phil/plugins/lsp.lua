@@ -3,7 +3,7 @@
 -- flutter-tools.
 return {
     "neovim/nvim-lspconfig",
-    enabled = true,
+    enabled = false,
     lazy = false,
     cond = not vim.g.vscode,
     dependencies = {
@@ -35,6 +35,7 @@ return {
             ensure_installed = {
                 "clangd", "lua_ls", "cmake", "html", "pylsp",
             },
+
             automatic_installation = {
                 exclude = { "clangd" } -- Always use local copy
             },

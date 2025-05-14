@@ -1,0 +1,62 @@
+return {
+    "neovim/nvim-lspconfig",
+    enabled = true,
+    dependencies = {
+        "williamboman/mason.nvim",
+        "williamboman/mason-lspconfig.nvim",
+    },
+    lazy = false,
+    cond = not vim.g.vscode,
+    config = function()
+
+
+
+
+
+
+        -- require("mason").setup()
+        -- require("mason-lspconfig").setup({
+        --     ensure_installed = {
+        --         "clangd", "lua_ls", "cmake", "html", "pylsp",
+        --     },
+        --
+        --     automatic_installation = {
+        --         exclude = { "clangd" } -- Always use local copy
+        --     },
+        --     handlers = {
+        --         function(server_name) -- default handler
+        --             require("lspconfig")[server_name].setup({
+        --                 capabilities = capabilities
+        --             })
+        --         end,
+        --
+        --         -- LSP-specific handlers
+        --         ["lua_ls"] = function()
+        --             local lspconfig = require("lspconfig")
+        --             lspconfig.lua_ls.setup({
+        --                 capabilities = capabilities,
+        --                 settings = {
+        --                     Lua = {
+        --                         diagnostics = {
+        --                             globals = { "vim", }
+        --                         }
+        --                     }
+        --                 }
+        --             })
+        --         end,
+        --         ["clangd"] = function()
+        --             local lspconfig = require("lspconfig")
+        --             lspconfig.clangd.setup({
+        --                 capabilities = capabilities,
+        --                 cmd = {
+        --                     "clangd",                                                                    -- On macOS, switch to Xcode included clangd
+        --                     "--background-index",
+        --                     "--compile-commands-dir=/Users/philiprader/Developer/Git/FFBrickGame/ebuild" -- This is the way it works for some reason?
+        --                     -- "--compile-commands-dir=./esbuild", -- Test, we need a more permanent config for this
+        --                 }
+        --             })
+        --         end,
+        --     }
+        -- })
+    end
+}
