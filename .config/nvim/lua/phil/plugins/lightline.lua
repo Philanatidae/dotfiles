@@ -5,7 +5,7 @@ return {
     cond = not vim.g.vscode,
     priority = 100,
     dependencies = {
-        "ryanoasis/vim-devicons",
+        "nvim-tree/nvim-web-devicons",
 
         "josa42/nvim-lightline-lsp",
         "nvim-lua/lsp-status.nvim",
@@ -13,11 +13,13 @@ return {
     config = function()
         vim.opt.showmode = false -- Lightline shows mode, so we don't need this in the command section
 
-        vim.cmd([[
-                    function! DevIconsFiletype()
-                        return strlen(&filetype) ? &filetype . ' ' . WebDevIconsGetFileTypeSymbol() : ''
-                    endfunction
-                ]])
+        function _G.DevIconsFiletype()
+            local devicons = require('nvim-web-devicons')
+            local ft = vim.bo.filetype
+            if ft == '' then return '' end
+            local icon = devicons.get_icon_by_filetype(ft, { default = true })
+            return ft .. ' ' .. (icon or '')
+        end
 
         vim.cmd([[
                     let s:palette = v:lua.require('phil.lightline.colorscheme.nightowl')
@@ -35,7 +37,7 @@ return {
                 time = "%{strftime('%l:%M %p')}",
             },
             component_function = {
-                filetype = 'DevIconsFiletype',
+                filetype = 'v:lua.DevIconsFiletype',
             },
             active = {
                 left = {
