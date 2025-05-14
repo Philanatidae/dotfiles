@@ -5,6 +5,7 @@ return {
     },
     enabled = true,
     lazy = true,
+    event = { "BufEnter *.dart" },
     keys = {
         {
             "<leader>Fr",
