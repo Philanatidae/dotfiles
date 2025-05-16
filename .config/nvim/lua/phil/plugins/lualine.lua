@@ -1,4 +1,3 @@
--- I can't get this working with wintabs right now
 return {
     "nvim-lualine/lualine.nvim",
     enabled = true,
@@ -21,6 +20,12 @@ return {
             local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
             if next(buf_clients) == nil then
                 return 'LSP Inactive'
+            end
+            return ''
+        end
+        local function dap_ui_status()
+            if vim.g.dapui_enabled then
+                return 'DEBUG'
             end
             return ''
         end
@@ -49,8 +54,20 @@ return {
                 -- +-------------------------------------------------+
                 -- | A | B | C                             X | Y | Z |
                 -- +-------------------------------------------------+
-                lualine_a = { 'mode', },
-                lualine_b = { 'lsp_status', lsp_inactive_status, },
+                lualine_a = {
+                    'mode',
+                },
+                lualine_b = {
+                    {
+                        dap_ui_status,
+                        color = { fg = '#ffffff', bg = '#008000' },
+                        cond = function() return vim.g.dapui_enabled end,
+                        separator = '',
+                        padding = { left = 1, right = 1 },
+                    },
+                    'lsp_status',
+                    lsp_inactive_status,
+                },
                 lualine_c = { 'diagnostics', },
 
                 lualine_x = { '%f', },

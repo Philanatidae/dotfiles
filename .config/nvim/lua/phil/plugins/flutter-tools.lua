@@ -2,6 +2,7 @@ return {
     'nvim-flutter/flutter-tools.nvim',
     dependencies = {
         'nvim-telescope/telescope.nvim',
+        'mfussenegger/nvim-dap',
     },
     enabled = true,
     -- This plugin lazy-loads by itself:
@@ -48,6 +49,12 @@ return {
                 notify_errors = false,
                 open_cmd = "tabedit", -- @todo Maybe floating window instead?
                 focus_on_open = false,
+            },
+            debugger = {
+                enabled = true,
+            },
+            widget_guides = {
+                enabled = true,
             },
         })
 
