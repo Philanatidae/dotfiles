@@ -3,12 +3,28 @@ return {
     "nvim-lualine/lualine.nvim",
     enabled = true,
     lazy = false,
-    priority = 100,
     dependencies = {
         "nvim-tree/nvim-web-devicons",
-        "nvim-lua/lsp-status.nvim",
     },
     config = function()
+        local function devicons_filetype()
+            local devicons = require('nvim-web-devicons')
+            local ft = vim.bo.filetype
+            if ft == '' then return '' end
+            local icon = devicons.get_icon_by_filetype(ft, { default = true })
+            return ft .. ' ' .. (icon or '')
+        end
+        local function time()
+            return "%{strftime('%l:%M %p')}"
+        end
+        local function lsp_inactive_status()
+            local buf_clients = vim.lsp.get_clients({ bufnr = 0 })
+            if next(buf_clients) == nil then
+                return 'LSP Inactive'
+            end
+            return ''
+        end
+
         require('lualine').setup {
             options = {
                 icons_enabled = true,
@@ -19,32 +35,36 @@ return {
                     statusline = {},
                     winbar = {},
                 },
-                ignore_focus = {},
                 always_divide_middle = true,
-                always_show_tabline = true,
+                always_show_tabline = false,
                 globalstatus = false,
                 refresh = {
-                    statusline = 200,
-                    tabline = 200,
-                    winbar = 200,
+                    -- Wintabs will handle rendering
+                    statusline = 0,
+                    tabline = 0,
+                    winbar = 0,
                 }
             },
             sections = {
-                lualine_a = { 'mode' },
-                lualine_b = { 'branch', 'diff', 'diagnostics' },
-                lualine_c = { 'filename' },
-                lualine_x = { 'encoding', 'fileformat', 'filetype' },
-                lualine_y = { 'progress' },
-                lualine_z = { 'location' }
+                -- +-------------------------------------------------+
+                -- | A | B | C                             X | Y | Z |
+                -- +-------------------------------------------------+
+                lualine_a = { 'mode', },
+                lualine_b = { 'lsp_status', lsp_inactive_status, },
+                lualine_c = { 'diagnostics', },
+
+                lualine_x = { '%f', },
+                lualine_y = { devicons_filetype },
+                lualine_z = { 'readonly', time, 'location', }
             },
-            inactive_sections = {
-                lualine_a = {},
-                lualine_b = {},
-                lualine_c = { 'filename' },
-                lualine_x = { 'location' },
-                lualine_y = {},
-                lualine_z = {}
-            },
+            -- inactive_sections = {
+            --     lualine_a = {},
+            --     lualine_b = {},
+            --     lualine_c = { 'filename' },
+            --     lualine_x = { 'location' },
+            --     lualine_y = {},
+            --     lualine_z = {}
+            -- },
             tabline = {},
             extensions = {}
         }
