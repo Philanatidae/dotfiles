@@ -20,6 +20,9 @@ return {
         vim.lsp.config("*", {
             capabilities = capabilities,
         })
+
+        -- mason-lspconfig starts most LSPs automatically, with these exceptions:
+        --  - flutter-tools: dartls
     end
 }
 
