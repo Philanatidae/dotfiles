@@ -4,7 +4,9 @@ return {
         'nvim-telescope/telescope.nvim',
     },
     enabled = true,
-    lazy = true,
+    -- This plugin lazy-loads by itself:
+    -- https://github.com/nvim-flutter/flutter-tools.nvim/blob/d5bb1dc3db78d7ab65dd8c5a6f32a38e383b9cb1/lua/flutter-tools.lua#L77
+    lazy = false,
     event = { "BufEnter *.dart" },
     keys = {
         {
