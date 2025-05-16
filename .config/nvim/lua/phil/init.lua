@@ -19,11 +19,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts)
 
         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
-        -- @todo Rebind these, <leader>l is used for quick window switch
-        -- vim.keymap.set("n", "<leader>lws", function() vim.lsp.buf.workspace_symbol() end, opts)
-        -- vim.keymap.set("n", "<leader>ld", function() vim.diagnostic.open_float() end, opts)
-        -- vim.keymap.set("n", "<leader>lca", function() vim.lsp.buf.code_action() end, opts)
-        -- vim.keymap.set("n", "<leader>lr", function() vim.lsp.buf.references() end, opts)
 
         -- @todo Can I selectively have this mapped when clangd is being used?
         vim.keymap.set("n", "<leader>o", ":ClangdSwitchSourceHeader<CR>", opts)

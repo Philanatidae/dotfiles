@@ -2,17 +2,13 @@ return {
     "zefei/vim-wintabs",
     enabled = true,
     lazy = false,
-    -- Has to be after lightline/lualine,
-    -- use priority instead of dependency
-    -- to be able to selectively enable
-    priority = 99,
     dependencies = {
-        "zefei/vim-wintabs-powerline",
+        -- "zefei/vim-wintabs-powerline",
+        "zefei/vim-wintabs",
     },
     config = function()
         local lualine = require('lualine')
         if lualine then
-            -- Wintabs has this built-in for lightline
             function _G.wintabs_statusline()
                 return lualine.statusline(lualine.get_config().sections, true)
             end
@@ -50,17 +46,13 @@ return {
 
         vim.cmd([[
                 function! UpdateStatusLine()
-                    if exists('g:lightline')
-                        call lightline#update()
-                        execute 'WintabsRefresh'
-                    else
 lua <<EOF
-                        local lualine = require('lualine')
-                        if lualine then
-                            lualine.refresh()
-                        end
+                    local lualine = require('lualine')
+                    if lualine then
+                        lualine.refresh()
+                    end
 EOF
-                    endif
+                    execute 'WintabsRefresh'
                 endfunction
 
                 " Update status line once per second, for updating the clock if there is no
@@ -71,7 +63,7 @@ EOF
 
                 " @todo Only needed for clock, but we could move the clock to tmux?
                 " Set the timer to call the UpdateStatusLine function once per second
-                "let g:statusline_update_timer = timer_start(1000, 'UpdateStatusLinePeriodically', {'repeat': -1})
+                let g:statusline_update_timer = timer_start(1000, 'UpdateStatusLinePeriodically', {'repeat': -1})
 
                 " Extra updates that are stubborn
                 augroup VisualEvent
