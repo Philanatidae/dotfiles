@@ -15,6 +15,10 @@ return {
                 'cmake',
                 'html',
                 'pylsp',
+                'jsonls',
+                'cssls',
+                'eslint',
+                'ts_ls',
             },
             automatic_enable = true,
        })
