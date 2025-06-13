@@ -85,5 +85,6 @@ return {
             tabline = {},
             extensions = {}
         }
+        require('lualine').hide()
     end
 }
