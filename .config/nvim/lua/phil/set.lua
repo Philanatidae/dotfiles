@@ -17,6 +17,24 @@ vim.opt.autoindent = true
 vim.opt.mouse = "a"
 
 --vim.opt.clipboard = "unnamedplus" -- Use global clipboard
+-- If using wl-clipboard, we need to set manually so that *
+-- is the same as +.
+if vim.env.WAYLAND_DISPLAY ~= nil and vim.env.WAYLAND_DISPLAY ~= ''
+    and vim.fn.executable('wl-copy') == 1
+    and vim.fn.executable('wl-paste') == 1 then
+    vim.g.clipboard = {
+        name = 'wl-clipboard',
+        copy = {
+            ['+'] = { 'wl-copy', '--type', 'text/plain' },
+            ['*'] = { 'wl-copy', '--type', 'text/plain' },
+        },
+        paste = {
+            ['+'] = { 'wl-paste', '--no-newline' },
+            ['*'] = { 'wl-paste', '--no-newline' },
+        },
+        cache_enabled = 0,
+    }
+end
 
 vim.opt.cursorline = true  -- Highlight line cursor is on
 vim.opt.signcolumn = "yes" -- Column on left for breakpoints, etc.
