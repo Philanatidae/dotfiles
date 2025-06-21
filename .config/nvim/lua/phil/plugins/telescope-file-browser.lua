@@ -7,10 +7,11 @@ return {
         {
             "<leader>s",
             "<cmd>Telescope file_browser<cr>",
-            "Search project files"
+            "Search all files",
         },
     },
     config = function()
+        -- @todo Move this into a utility to be used multiple places
         local file_create = function(prompt_bufnr)
             -- Originally from https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e94f29d800f582f317bb25f986c2cf487c9dec7f/lua/telescope/_extensions/file_browser/actions.lua#L69
             local actions = require("telescope.actions")
@@ -53,11 +54,17 @@ return {
             end)
         end
 
+        if vim.fn.executable('fd') ~= 1 then
+            error('`fd` is required to be installed');
+        end
+
         require("telescope._extensions")._config.file_browser = {
             depth = false,
             create_from_prompt = false,
             hide_parent_dir = true,
             display_stat = false,
+            respect_gitignore = true,
+            git_status = false,
             mappings = {
                 ["i"] = {
                     ["<S-CR>"] = file_create,
