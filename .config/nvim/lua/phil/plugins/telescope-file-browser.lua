@@ -60,6 +60,10 @@ return {
 
         require("telescope._extensions")._config.file_browser = {
             depth = false,
+            hidden = {
+                file_browser = true,
+                folder_browser = true,
+            },
             create_from_prompt = false,
             hide_parent_dir = true,
             display_stat = false,
