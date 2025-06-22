@@ -1,0 +1,34 @@
+// -*- mode: jsonc -*-
+{
+    "height": 20,
+    "spacing": 4,
+    // Choose the order of the modules
+    "modules-left": [
+        "custom/workspaces"
+    ],
+    "modules-center": ["hyprland/window"],
+    "modules-right": [
+        "clock"
+    ],
+    // Modules configuration
+    "hyprland/window": {
+        "separate-outputs": true
+    },
+    // "hyprland/workspaces": {
+    //     "format": "{icon}",
+    //     "format-icons": {
+    //         "urgent": "",
+    //         "active": "", // focused workspace on current monitor 
+    //         "visible": "", // focused workspace on other monitors
+    //         "default": "",
+    //         "empty": "" // persistent (created by this plugin)
+    //     },
+    //     "all-outputs": false // recommended
+    // },
+    "custom/workspaces": {
+        "exec": "$HOME/.config/waybar/hyprland_workspace_wrapper.sh"
+    },
+    "clock": {
+        "format": "{:%I:%M%p}"
+    }
+}

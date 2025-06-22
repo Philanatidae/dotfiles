@@ -23,6 +23,18 @@ Clone the repo and run `stow -t ~ .` to create the symlinks.
 
 ### tmux
 
+### Hyprland
+ - `mako`: notification daemon
+ - `hyprpolkitagent`: polkit authentication daemon
+ - `walker`: app menu
+ - `foot`: terminal emulator
+ - `dolphin`: file browser
+ - `firefox`: web browser
+ - `waybar`: menu bar
+
+Plugins:
+ - https://github.com/Duckonaut/split-monitor-workspaces
+
 ### udevmon
 @todo
 
