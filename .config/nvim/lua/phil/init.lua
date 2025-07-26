@@ -21,7 +21,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
         -- @todo Can I selectively have this mapped when clangd is being used?
-        vim.keymap.set("n", "<leader>o", ":ClangdSwitchSourceHeader<CR>", opts)
+        vim.keymap.set("n", "<leader>o", ":LspClangdSwitchSourceHeader<CR>", opts)
 
         vim.lsp.inlay_hint.enable(true)
     end
