@@ -8,6 +8,7 @@
     ],
     "modules-center": ["hyprland/window"],
     "modules-right": [
+        "tray",
         "clock"
     ],
     // Modules configuration
