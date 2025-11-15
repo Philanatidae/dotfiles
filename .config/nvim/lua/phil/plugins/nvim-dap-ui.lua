@@ -22,6 +22,14 @@ return {
                 end,
                 'Toggle debug ui (dap-ui)'
             },
+            {
+                '<leader>dK',
+                function()
+                    if require('dap').session() ~= nil then
+                        require('dapui').eval()
+                    end
+                end,
+            },
         }
     end,
     opts = {},
