@@ -1,5 +1,3 @@
--- Need "let g:np_plugin_maps=1"
-
 vim.opt.backup = false      -- No backup before overwriting file
 vim.opt.writebackup = false -- ^^^
 vim.opt.updatetime = 750    -- 750ms after no input before writing swap file
@@ -16,7 +14,6 @@ vim.opt.autoindent = true
 -- Enable mouse
 vim.opt.mouse = "a"
 
---vim.opt.clipboard = "unnamedplus" -- Use global clipboard
 -- If using wl-clipboard, we need to set manually so that *
 -- is the same as +.
 if vim.env.WAYLAND_DISPLAY ~= nil and vim.env.WAYLAND_DISPLAY ~= ''
