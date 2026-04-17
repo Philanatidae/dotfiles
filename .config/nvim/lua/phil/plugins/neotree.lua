@@ -6,6 +6,7 @@ return {
     dependencies = {
         "nvim-lua/plenary.nvim",
         "MunifTanjim/nui.nvim",
+        "3rd/image.nvim",
         "nvim-tree/nvim-web-devicons",
     },
     cond = not vim.g.vscode,
@@ -21,9 +22,9 @@ return {
                 event = "neo_tree_buffer_enter",
                 handler = function(arg)
                     vim.cmd([[
-                    setlocal number
-                  setlocal relativenumber
-            ]])
+                        setlocal number
+                      setlocal relativenumber
+                    ]])
                 end,
             },
         },
