@@ -56,17 +56,25 @@ vim.opt.splitright = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
+local sev = vim.diagnostic.severity
 vim.diagnostic.config({
+    virtual_text = true,
+    severity_sort = true,
+    signs = {
+        text = {
+            [sev.ERROR] = '',
+            [sev.WARN] = '',
+            [sev.INFO] = '',
+            [sev.HINT] = '',
+        }
+    },
     float = {
         focusable = false,
         style = "minimal",
         border = "rounded",
-        source = "always",
+        source = true,
         header = "",
         prefix = "",
+        suffix = "",
     }
 })
-vim.fn.sign_define('DiagnosticSignError', { text = '', texthl = 'DiagnosticSignError' })
-vim.fn.sign_define('DiagnosticSignWarn', { text = '', texthl = 'DiagnosticSignWarn' })
-vim.fn.sign_define('DiagnosticSignInfo', { text = '', texthl = 'DiagnosticSignInfo' })
-vim.fn.sign_define('DiagnosticSignHint', { text = '', texthl = 'DiagnosticSignHint' })
