@@ -45,6 +45,7 @@ else
         vim.cmd("qa")
     end)
 
+    -- Window management
     vim.keymap.set("n", "=", ":<C-u>exe 'vertical resize +' . v:count1<CR>")
     vim.keymap.set("n", "-", ":<C-u>exe 'vertical resize -' . v:count1<CR>")
     vim.keymap.set("n", "+", ":<C-u>exe 'resize +' . v:count1<CR>")
