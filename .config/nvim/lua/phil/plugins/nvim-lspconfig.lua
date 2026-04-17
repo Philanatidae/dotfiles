@@ -1,18 +1,18 @@
 return {
     'neovim/nvim-lspconfig',
     dependencies = {
-      'saghen/blink.cmp',
+        'saghen/blink.cmp',
     },
     enabled = true,
     lazy = false,
     config = function()
         local capabilities = {
-          textDocument = {
-            foldingRange = {
-              dynamicRegistration = false,
-              lineFoldingOnly = false,
+            textDocument = {
+                foldingRange = {
+                    dynamicRegistration = false,
+                    lineFoldingOnly = false,
+                }
             }
-          }
         }
 
         capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
@@ -21,7 +21,7 @@ return {
             capabilities = capabilities,
         })
         vim.lsp.config("clangd", {
-            cmd = { 'clangd', '--all-scopes-completion', '--header-insertion=never' },
+            cmd = { 'clangd', '--all-scopes-completion', '--header-insertion=never', '--completion-style=detailed' },
             filetypes = { 'c', 'cpp', 'h', 'hpp', 'm', 'mm', 'hm', 'hmm' },
             single_file_support = false,
         })
@@ -30,4 +30,3 @@ return {
         --  - flutter-tools: dartls
     end
 }
-

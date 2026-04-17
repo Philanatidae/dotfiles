@@ -76,8 +76,20 @@ return {
         },
 
         completion = {
+            accept = {
+                auto_brackets = {
+                    enabled = false,
+                },
+            },
             documentation = {
                 auto_show = true
+            },
+            ghost_text = {
+                enabled = true,
+                show_with_selection = true,
+                show_without_selection = true,
+                show_with_menu = true,
+                show_without_menu = true,
             },
             list = {
                 selection = {
@@ -88,8 +100,8 @@ return {
             menu = {
                 draw = {
                     columns = {
-                        { 'label', 'label_description', gap = 1, },
-                        { 'kind_icon', 'kind', gap = 1 },
+                        { 'label',     'label_description', gap = 1, },
+                        { 'kind_icon', 'kind',              gap = 1 },
                     },
                     components = {
                         kind_icon = {
