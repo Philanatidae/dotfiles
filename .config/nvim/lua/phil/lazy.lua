@@ -16,6 +16,6 @@ require("lazy").setup({
     rocks = { enabled = false },
     change_detection = { -- This is more annoying than useful
         enabled = false,
-        notify = false,
+        notify = true,
     },
 })
