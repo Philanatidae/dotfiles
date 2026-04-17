@@ -2,7 +2,7 @@ return {
     "stevearc/conform.nvim",
     enabled = true,
     lazy = true,
-    -- event = { "BufWritePre" },
+    event = { "BufWritePre" },
     cmd = { "ConformInfo" },
     keys = {
         {
@@ -29,7 +29,10 @@ return {
             lsp_format = "fallback",
         },
         -- Set up format-on-save
-        -- format_on_save = { timeout_ms = 500 },
+        format_on_save = {
+            timeout_ms = 500,
+            lsp_fallback = true,
+        },
         -- Customize formatters
         formatters = {
             shfmt = {
