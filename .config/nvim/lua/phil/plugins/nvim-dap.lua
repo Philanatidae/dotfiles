@@ -47,7 +47,7 @@ return {
         local dap = require('dap')
 
         -- https://github.com/mfussenegger/nvim-dap/wiki/C-C---Rust-(via--codelldb)
-        dap.adapters.codelldb = {
+        dap.adapters.lldb = {
             type = 'executable',
             command = 'codelldb', -- Must be in path
 
