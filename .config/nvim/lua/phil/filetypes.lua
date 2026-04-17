@@ -1,9 +1,11 @@
-vim.cmd([[
-    autocmd BufRead,BufNewFile *.hm set filetype=objc
-    autocmd BufRead,BufNewFile *.m set filetype=objc
-    autocmd BufRead,BufNewFile *.hmm set filetype=objcpp
-    autocmd BufRead,BufNewFile *.mm set filetype=objcpp
+vim.filetype.add({
+    extension = {
+        hm = "objc",
+        m = "objc",
+        hmm = "objcpp",
+        mm  = "objcpp",
+        vert = "glsl",
+        frag = "glsl",
+    },
+})
 
-    autocmd BufRead,BufNewFile *.vert set filetype=glsl
-    autocmd BufRead,BufNewFile *.frag set filetype=glsl
-]])
