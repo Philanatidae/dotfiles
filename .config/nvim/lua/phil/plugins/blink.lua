@@ -73,6 +73,9 @@ return {
 
         signature = {
             enabled = true,
+            window = {
+                direction_priority = { 's', 'n' },
+            },
         },
 
         completion = {
