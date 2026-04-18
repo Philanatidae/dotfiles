@@ -1,5 +1,5 @@
 return {
-    "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
+    'https://gitlab.com/HiPhish/rainbow-delimiters.nvim',
     enabled = true,
     lazy = false,
     cond = not vim.g.vscode,

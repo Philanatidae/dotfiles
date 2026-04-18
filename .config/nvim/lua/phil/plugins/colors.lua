@@ -1,5 +1,5 @@
 return {
-    "Philanatidae/night-owl.nvim",
+    'Philanatidae/night-owl.nvim',
     enabled = true,
     lazy = false,
     cond = not vim.g.vscode,
@@ -7,7 +7,7 @@ return {
     config = function()
         -- @todo Add light theme
         -- @todo Remove this hard-coded color change (lightline.lua also has a hard-coded value)
-        require("night-owl").setup()
-        vim.cmd("colorscheme night-owl")
+        require('night-owl').setup()
+        vim.cmd('colorscheme night-owl')
     end
 }

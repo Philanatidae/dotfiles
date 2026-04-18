@@ -1,9 +1,7 @@
 return {
-    "moll/vim-bbye",
+    'moll/vim-bbye',
     lazy = false,
     enabled = false,
-    dependencies = {
-    },
     init = function()
     end
 }

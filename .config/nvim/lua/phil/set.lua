@@ -6,7 +6,7 @@ vim.opt.timeoutlen = 750
 vim.opt.confirm = true
 vim.opt.exrc = true
 vim.opt.undofile = true
-vim.opt.mouse = "a"
+vim.opt.mouse = 'a'
 
 -- Indent w/ 4 spaces
 vim.opt.tabstop = 4
@@ -20,12 +20,12 @@ vim.opt.breakindent = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 vim.opt.hlsearch = false
-vim.opt.inccommand = "split"
+vim.opt.inccommand = 'split'
 
 -- Appearance
 vim.opt.termguicolors = true
 vim.opt.cursorline = true
-vim.opt.signcolumn = "yes"
+vim.opt.signcolumn = 'yes'
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.scrolloff = 8
@@ -33,19 +33,27 @@ vim.opt.sidescrolloff = 8
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.list = true
-vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Auto switch between relative and normal
-local numbertoggle_augroup = vim.api.nvim_create_augroup("numbertoggle", { clear = true })
-vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
+local numbertoggle_augroup = vim.api.nvim_create_augroup('numbertoggle', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
     pattern = "*",
     group = numbertoggle_augroup,
-    command = "if &nu && mode() != 'i' | set rnu   | endif",
+    callback = function()
+        if vim.opt.number:get() and vim.api.nvim_get_mode().mode ~= 'i' then
+            vim.opt.relativenumber = true
+        end
+    end,
 })
-vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
-    pattern = "*",
+vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
+    pattern = '*',
     group = numbertoggle_augroup,
-    command = "if &nu | set nornu | endif",
+    callback = function()
+        if vim.opt.number:get() then
+            vim.opt.relativenumber = false
+        end
+    end,
 })
 
 -- If using wl-clipboard, we need to set manually so that *
@@ -82,11 +90,11 @@ vim.diagnostic.config({
     },
     float = {
         focusable = false,
-        style = "minimal",
-        border = "rounded",
+        style = 'minimal',
+        border = 'rounded',
         source = true,
-        header = "",
-        prefix = "",
-        suffix = "",
+        header = '',
+        prefix = '',
+        suffix = '',
     }
 })

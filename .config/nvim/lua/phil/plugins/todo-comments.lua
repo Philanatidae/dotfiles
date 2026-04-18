@@ -1,10 +1,10 @@
 return {
-    "folke/todo-comments.nvim",
+    'folke/todo-comments.nvim',
     enabled = true,
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = { 'nvim-lua/plenary.nvim' },
     lazy = true,
     keys = {
-        { "<leader>St", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+        { '<leader>St', '<cmd>TodoTelescope<cr>', desc = 'Todo' },
     },
     opts = {}
 }

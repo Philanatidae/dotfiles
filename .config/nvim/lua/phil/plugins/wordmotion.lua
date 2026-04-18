@@ -1,5 +1,5 @@
 return {
-    "chaoren/vim-wordmotion",
+    'chaoren/vim-wordmotion',
     enabled = true,
     lazy = false,
 }

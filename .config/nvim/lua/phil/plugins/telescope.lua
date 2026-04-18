@@ -1,11 +1,11 @@
 return {
-    "nvim-telescope/telescope.nvim",
+    'nvim-telescope/telescope.nvim',
     enabled = true,
     lazy = true,
     dependencies = {
-        "nvim-lua/plenary.nvim",
+        'nvim-lua/plenary.nvim',
     },
-    cmd = "Telescope",
+    cmd = 'Telescope',
     keys = function()
         local telescope = require('telescope.builtin')
 
@@ -36,39 +36,39 @@ return {
         end
         return {
             {
-                "<leader>SS",
-                "<cmd>Telescope live_grep<cr>",
-                "Search content in files"
+                '<leader>SS',
+                '<cmd>Telescope live_grep<cr>',
+                'Search content in files'
             },
             {
-                "<leader>Sh",
-                "<cmd>Telescope help_tags<cr>",
-                "Search help tags"
+                '<leader>Sh',
+                '<cmd>Telescope help_tags<cr>',
+                'Search help tags'
             },
             {
-                "<leader>Sc",
-                "<cmd>Telescope commands<cr>",
-                "Search commands"
+                '<leader>Sc',
+                '<cmd>Telescope commands<cr>',
+                'Search commands'
             },
             {
-                "<leader>Sk",
-                "<cmd>Telescope keymaps<cr>",
-                "Search keymaps"
+                '<leader>Sk',
+                '<cmd>Telescope keymaps<cr>',
+                'Search keymaps'
             },
             {
-                "<leader>Sd",
+                '<leader>Sd',
                 function() smart_diagnostics(true) end,
-                "Search LSP diagnostics"
+                'Search LSP diagnostics'
             },
             {
-                "<leader>SD",
+                '<leader>SD',
                 function() smart_diagnostics(false) end,
-                "Search LSP diagnostics"
+                'Search LSP diagnostics'
             },
         }
     end,
     config = function()
-        require("telescope").setup({})
-        vim.api.nvim_exec_autocmds("User", { pattern = "TelescopeLoaded" })
+        require('telescope').setup({})
+        vim.api.nvim_exec_autocmds('User', { pattern = 'TelescopeLoaded' })
     end
 }

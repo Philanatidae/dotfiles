@@ -1,9 +1,9 @@
 return {
-    "nvim-lualine/lualine.nvim",
+    'nvim-lualine/lualine.nvim',
     enabled = true,
     lazy = false,
     dependencies = {
-        "nvim-tree/nvim-web-devicons",
+        'nvim-tree/nvim-web-devicons',
     },
     config = function()
         local function devicons_filetype()
@@ -14,7 +14,7 @@ return {
             return ft .. ' ' .. (icon or '')
         end
         local function time()
-            return "%{strftime('%l:%M %p')}"
+            return '%{strftime(\'%l:%M %p\')}'
         end
         local function lsp_inactive_status()
             local buf_clients = vim.lsp.get_clients({ bufnr = 0 })

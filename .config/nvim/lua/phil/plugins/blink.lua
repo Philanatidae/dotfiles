@@ -6,7 +6,7 @@ return {
     -- use a release tag to download pre-built binaries
     version = '1.*',
     dependencies = {
-        "nvim-tree/nvim-web-devicons",
+        'nvim-tree/nvim-web-devicons',
         'onsails/lspkind.nvim',
     },
 
@@ -146,7 +146,7 @@ return {
             default = { 'lsp', 'path', 'buffer', },
         },
 
-        fuzzy = { implementation = "prefer_rust_with_warning" }
+        fuzzy = { implementation = 'prefer_rust_with_warning' }
     },
-    opts_extend = { "sources.default" }
+    opts_extend = { 'sources.default' }
 }

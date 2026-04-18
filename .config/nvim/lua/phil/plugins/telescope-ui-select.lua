@@ -1,10 +1,10 @@
 return {
-    "nvim-telescope/telescope-ui-select.nvim",
+    'nvim-telescope/telescope-ui-select.nvim',
     enabled = true,
-    dependencies = { "nvim-telescope/telescope.nvim" },
+    dependencies = { 'nvim-telescope/telescope.nvim' },
     lazy = false,
-    event = "User TelescopeLoaded",
+    event = 'User TelescopeLoaded',
     config = function()
-        require("telescope").load_extension("ui-select")
+        require('telescope').load_extension('ui-select')
     end,
 }

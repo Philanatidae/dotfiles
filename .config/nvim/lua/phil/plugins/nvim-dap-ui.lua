@@ -3,7 +3,7 @@ return {
     enabled = true,
     dependencies = {
         'mfussenegger/nvim-dap',
-        "nvim-neotest/nvim-nio",
+        'nvim-neotest/nvim-nio',
     },
     lazy = true,
     keys = function()

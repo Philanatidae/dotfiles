@@ -17,10 +17,10 @@ return {
 
         capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
-        vim.lsp.config("*", {
+        vim.lsp.config('*', {
             capabilities = capabilities,
         })
-        vim.lsp.config("clangd", {
+        vim.lsp.config('clangd', {
             cmd = { 'clangd', '--all-scopes-completion', '--header-insertion=never', '--completion-style=detailed' },
             filetypes = { 'c', 'cpp', 'objc', 'objcpp', },
             single_file_support = false,

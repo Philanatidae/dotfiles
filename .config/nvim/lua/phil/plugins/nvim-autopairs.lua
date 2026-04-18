@@ -1,18 +1,18 @@
 return {
-    "windwp/nvim-autopairs",
+    'windwp/nvim-autopairs',
     enabled = true,
     lazy = true,
-    event = { "InsertEnter" },
+    event = { 'InsertEnter' },
     opts = {
         -- Define your formatters
         formatters_by_ft = {
-            lua = { "stylua" },
-            python = { "isort", "black" },
-            javascript = { "prettierd", "prettier", stop_after_first = true },
+            lua = { 'stylua' },
+            python = { 'isort', 'black' },
+            javascript = { 'prettierd', 'prettier', stop_after_first = true },
         },
         -- Set default options
         default_format_opts = {
-            lsp_format = "fallback",
+            lsp_format = 'fallback',
         },
         -- Set up format-on-save
         format_on_save = {
@@ -22,7 +22,7 @@ return {
         -- Customize formatters
         formatters = {
             shfmt = {
-                prepend_args = { "-i", "4" },
+                prepend_args = { '-i', '4' },
             },
         },
     },
