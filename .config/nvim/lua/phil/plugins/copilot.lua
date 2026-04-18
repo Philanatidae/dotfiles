@@ -5,11 +5,11 @@ return {
     cond = not vim.g.vscode,
     cmd = "Copilot",
     keys = {
-        { "<C-c>",     mode = { "i", "s" }, desc = "Copilot" },
-        { "<C-c><CR>", mode = { "i", "s" }, desc = "Copilot Accept" },
-        { "<C-c>n",    mode = { "i", "s" }, desc = "Copilot Next" },
-        { "<C-c>p",    mode = { "i", "s" }, desc = "Copilot Prev" },
-        { "<C-c>q",    mode = { "i", "s" }, desc = "Copilot Dismiss" },
+        { "<C-c>",      mode = { "i", "s" },       desc = "Copilot" },
+        { "<C-c><CR>",  mode = { "i", "s" },       desc = "Copilot Accept" },
+        { "<C-c>n",     mode = { "i", "s" },       desc = "Copilot Next" },
+        { "<C-c>p",     mode = { "i", "s" },       desc = "Copilot Prev" },
+        { "<C-c>q",     mode = { "i", "s" },       desc = "Copilot Dismiss" },
         { "<leader>gc", command = "Copilot panel", desc = "Copilot Panel" },
     },
     config = function()

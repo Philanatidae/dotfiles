@@ -2,7 +2,7 @@
 vim.opt.backup = false      -- No backup before overwriting file
 vim.opt.writebackup = false -- ^^^
 vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 750
 vim.opt.confirm = true
 vim.opt.exrc = true
 vim.opt.undofile = true

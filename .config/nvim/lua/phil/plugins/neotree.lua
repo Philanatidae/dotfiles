@@ -12,15 +12,15 @@ return {
     cond = not vim.g.vscode,
     cmd = "Neotree",
     keys = {
-        { "<C-t>",      "<cmd>Neotree toggle<CR>", "Neotree open" },
-        { "<leader>t",  "<cmd>Neotree reveal<CR>", "Neotree reveal" },
+        { "<C-t>",     "<cmd>Neotree toggle<CR>", "Open file tree" },
+        { "<leader>t", "<cmd>Neotree reveal<CR>", "Reveal current file in file tree" },
     },
     config = true,
     opts = {
         event_handlers = {
             {
                 event = "neo_tree_buffer_enter",
-                handler = function(arg)
+                handler = function()
                     vim.cmd([[
                         setlocal number
                       setlocal relativenumber

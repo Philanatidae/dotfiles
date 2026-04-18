@@ -4,16 +4,6 @@ return {
     lazy = false,
     cond = not vim.g.vscode,
     config = function()
-        require('rainbow-delimiters.setup').setup {
-            -- strategy = {
-            --     -- ...
-            -- },
-            -- query = {
-            --     -- ...
-            -- },
-            -- highlight = {
-            --     -- ...
-            -- },
-        }
+        require('rainbow-delimiters.setup').setup {}
     end
 }

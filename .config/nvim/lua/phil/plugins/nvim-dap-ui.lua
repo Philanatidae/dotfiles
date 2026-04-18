@@ -2,7 +2,7 @@ return {
     'rcarriga/nvim-dap-ui',
     enabled = true,
     dependencies = {
-        "mfussenegger/nvim-dap",
+        'mfussenegger/nvim-dap',
         "nvim-neotest/nvim-nio",
     },
     lazy = true,
@@ -20,7 +20,7 @@ return {
                         vim.g.dapui_enabled = not vim.g.dapui_enabled
                     end
                 end,
-                'Toggle debug ui (dap-ui)'
+                'Toggle debug ui'
             },
             {
                 '<leader>dK',
@@ -29,6 +29,7 @@ return {
                         require('dapui').eval()
                     end
                 end,
+                'Inspect variable (debug)'
             },
         }
     end,
