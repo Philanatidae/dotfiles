@@ -1,6 +1,6 @@
 return {
     'zbirenbaum/copilot.lua',
-    enabled = true,
+    enabled = false,
     lazy = true,
     cond = not vim.g.vscode,
     cmd = 'Copilot',
