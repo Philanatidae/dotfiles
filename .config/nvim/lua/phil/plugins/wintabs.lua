@@ -1,6 +1,6 @@
 return {
     'zefei/vim-wintabs',
-    enabled = true,
+    enabled = false,
     lazy = false,
     dependencies = {
         'zefei/vim-wintabs',
