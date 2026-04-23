@@ -45,6 +45,7 @@ return {
                 globalstatus = false,
                 refresh = {
                     -- Wintabs will handle rendering
+                    -- @todo Have this re-enable when wintabs is disabled
                     statusline = 0,
                     tabline = 0,
                     winbar = 0,
