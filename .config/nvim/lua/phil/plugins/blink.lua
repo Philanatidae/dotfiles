@@ -143,7 +143,15 @@ return {
         -- elsewhere in your config, without redefining it, due to `opts_extend`
         sources = {
             -- default = { 'lsp', 'path', 'snippets', 'buffer' },
-            default = { 'lsp', 'path', 'buffer', },
+            default = { 'lazydev', 'lsp', 'path', 'buffer', },
+            providers = {
+                lazydev = {
+                    name = 'LazyDev',
+                    module = 'lazydev.integrations.blink',
+                    -- make lazydev completions top priority (see `:h blink.cmp`)
+                    score_offset = 100,
+                },
+            },
         },
 
         fuzzy = { implementation = 'prefer_rust_with_warning' }

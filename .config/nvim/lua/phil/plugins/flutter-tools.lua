@@ -13,32 +13,32 @@ return {
         {
             '<leader>Fr',
             '<cmd>FlutterRun<CR>',
-            'Run Flutter project',
+            desc = 'Run Flutter project',
         },
         {
             '<leader>FR',
             '<cmd>FlutterRestart<CR>',
-            'Hot restart Flutter project',
+            desc = 'Hot restart Flutter project',
         },
         {
             '<leader>Fq',
             '<cmd>FlutterQuit<CR>',
-            'Quit Flutter project',
+            desc = 'Quit Flutter project',
         },
         {
             '<leader>Fo',
             '<cmd>FlutterOutlineToggle<CR>',
-            'Toggle Flutter widget outline',
+            desc = 'Toggle Flutter widget outline',
         },
         {
             '<leader>SF',
             '<cmd>Telescope flutter commands<CR>',
-            'Telescope Flutter',
+            desc = 'Telescope Flutter',
         },
         {
             '<leader>Fs',
             '<cmd>Telescope flutter commands<CR>',
-            'Telescope Flutter',
+            desc = 'Telescope Flutter',
         },
     },
     config = function()

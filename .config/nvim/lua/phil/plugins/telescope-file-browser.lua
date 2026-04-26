@@ -7,7 +7,7 @@ return {
         {
             '<leader>s',
             '<cmd>Telescope file_browser<cr>',
-            'Search all files',
+            desc = 'Search all files',
         },
     },
     config = function()

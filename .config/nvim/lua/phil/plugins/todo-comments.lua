@@ -4,7 +4,11 @@ return {
     dependencies = { 'nvim-lua/plenary.nvim' },
     lazy = true,
     keys = {
-        { '<leader>St', '<cmd>TodoTelescope<cr>', desc = 'Todo' },
+        {
+            '<leader>St',
+            '<cmd>TodoTelescope<cr>',
+            desc = 'Todo'
+        },
     },
     config = function()
         local default_keywords = {

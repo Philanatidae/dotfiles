@@ -38,32 +38,32 @@ return {
             {
                 '<leader>SS',
                 '<cmd>Telescope live_grep<cr>',
-                'Search content in files'
+                desc = 'Search content in files'
             },
             {
                 '<leader>Sh',
                 '<cmd>Telescope help_tags<cr>',
-                'Search help tags'
+                desc = 'Search help tags'
             },
             {
                 '<leader>Sc',
                 '<cmd>Telescope commands<cr>',
-                'Search commands'
+                desc = 'Search commands'
             },
             {
                 '<leader>Sk',
                 '<cmd>Telescope keymaps<cr>',
-                'Search keymaps'
+                desc = 'Search keymaps'
             },
             {
                 '<leader>Sd',
                 function() smart_diagnostics(true) end,
-                'Search LSP diagnostics'
+                desc = 'Search LSP diagnostics'
             },
             {
                 '<leader>SD',
                 function() smart_diagnostics(false) end,
-                'Search LSP diagnostics'
+                desc = 'Search LSP diagnostics'
             },
         }
     end,

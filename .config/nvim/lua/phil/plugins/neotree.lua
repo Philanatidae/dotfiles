@@ -12,8 +12,16 @@ return {
     cond = not vim.g.vscode,
     cmd = 'Neotree',
     keys = {
-        { '<C-t>',     '<cmd>Neotree toggle<CR>', 'Open file tree' },
-        { '<leader>t', '<cmd>Neotree reveal<CR>', 'Reveal current file in file tree' },
+        {
+            '<C-t>',
+            '<cmd>Neotree toggle<CR>',
+            desc = 'Open file tree'
+        },
+        {
+            '<leader>t',
+            '<cmd>Neotree reveal<CR>',
+            desc = 'Reveal current file in file tree'
+        },
     },
     config = true,
     opts = {

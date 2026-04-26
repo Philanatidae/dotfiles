@@ -2,38 +2,41 @@ return {
     'mfussenegger/nvim-dap',
     enabled = true,
     lazy = true,
+    dependencies = {
+        'jbyuki/one-small-step-for-vimkind',
+    },
     keys = function()
         return {
             {
                 '<leader>b',
                 '<cmd>DapToggleBreakpoint<CR>',
-                'Toggle breakpoint',
+                desc = 'Toggle breakpoint',
             },
 
             {
                 '<F5>',
                 '<cmd>DapContinue<CR>',
-                'Debug Start/Continue',
+                desc = 'Debug Start/Continue',
             },
             {
                 '<S-F5>',
                 '<cmd>DapTerminate<CR>',
-                'Debug Stop',
+                desc = 'Debug Stop',
             },
             {
                 '<F6>',
                 '<cmd>DapStepOver<CR>',
-                'Debug Step Over',
+                desc = 'Debug Step Over',
             },
             {
                 '<F7>',
                 '<cmd>DapStepInto<CR>',
-                'Debug Step In',
+                desc = 'Debug Step In',
             },
             {
                 '<F8>',
                 '<cmd>DapStepOut<CR>',
-                'Debug Step Out',
+                desc = 'Debug Step Out',
             },
         }
     end,
@@ -71,5 +74,20 @@ return {
         -- dap.configurations.objc = dap.configurations.cpp
         -- dap.configurations.objcpp = dap.configurations.cpp
         -- dap.configurations.rust = dap.configurations.cpp
+
+        dap.adapters.nlua = function(callback, config)
+            callback({
+                type = 'server',
+                host = config.host or '127.0.0.1',
+                port = config.port or 8086,
+            })
+        end
+        dap.configurations.lua = {
+            {
+                type = 'nlua',
+                request = 'attach',
+                name = 'Attach to running Neovim instance'
+            },
+        }
     end
 }

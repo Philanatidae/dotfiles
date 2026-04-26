@@ -20,7 +20,7 @@ return {
                         vim.g.dapui_enabled = not vim.g.dapui_enabled
                     end
                 end,
-                'Toggle debug ui'
+                desc = 'Toggle debug ui'
             },
             {
                 '<leader>dK',
@@ -29,7 +29,7 @@ return {
                         require('dapui').eval()
                     end
                 end,
-                'Inspect variable (debug)'
+                desc = 'Inspect variable (debug)'
             },
         }
     end,
