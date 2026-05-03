@@ -39,6 +39,12 @@ if (vim.g.vscode) then
     vim.keymap.set('n', '<leader>j', ":<C-u>exe ':wincmd ' . v:count1 . 'j'<CR>")
     vim.keymap.set('n', '<leader>h', ":<C-u>exe ':wincmd ' . v:count1 . 'h'<CR>")
 else
+    -- Disable middle-click paste
+    vim.keymap.set({ 'n', 'i', 'v' }, '<MiddleMouse>', '<Nop>')
+    vim.keymap.set({ 'n', 'i', 'v' }, '<2-MiddleMouse>', '<Nop>')
+    vim.keymap.set({ 'n', 'i', 'v' }, '<3-MiddleMouse>', '<Nop>')
+    vim.keymap.set({ 'n', 'i', 'v' }, '<4-MiddleMouse>', '<Nop>')
+
     vim.keymap.set('n', '<leader>w', '<cmd>update<CR>', { desc = "Write buffer" })
     vim.keymap.set('n', '<leader>W', '<cmd>bufdo update<CR>', { desc = "Write all buffers" })
     vim.keymap.set('n', '<leader><C-q>', function()
@@ -46,10 +52,11 @@ else
     end, { desc = 'Quit Neovim' })
 
     -- Window management
-    vim.keymap.set('n', '=', ":<C-u>exe 'vertical resize +' . v:count1<CR>", { desc = "Increase window height" })
-    vim.keymap.set('n', '-', ":<C-u>exe 'vertical resize -' . v:count1<CR>", { desc = "Decrease window height" })
-    vim.keymap.set('n', '+', ":<C-u>exe 'resize +' . v:count1<CR>", { desc = 'Increase window width' })
-    vim.keymap.set('n', '_', ":<C-u>exe 'resize -' . v:count1<CR>", { desc = 'Decrease window width' })
+    -- @todo Consider moving to Hydra
+    vim.keymap.set('n', '<C-=>', ":<C-u>exe 'vertical resize +' . v:count1<CR>", { desc = "Increase window height" })
+    vim.keymap.set('n', '<C-->', ":<C-u>exe 'vertical resize -' . v:count1<CR>", { desc = "Decrease window height" })
+    vim.keymap.set('n', '<C-0>', ":<C-u>exe 'resize +' . v:count1<CR>", { desc = 'Increase window width' })
+    vim.keymap.set('n', '<C-9>', ":<C-u>exe 'resize -' . v:count1<CR>", { desc = 'Decrease window width' })
 
     vim.keymap.set('n', '<leader>l', ":<C-u>exe ':wincmd ' . v:count1 . 'l'<CR>",
         { desc = 'Move cursor to right window' })
