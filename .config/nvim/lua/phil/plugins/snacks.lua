@@ -18,4 +18,9 @@ return {
         statuscolumn = { enabled = false },
         words = { enabled = false },
     },
+    keys = {
+        { "<leader>ps", function() Snacks.profiler.scratch() end },
+        { "<leader>pp", function() Snacks.toggle.profiler() end },
+        { "<leader>ph", function() Snacks.toggle.profiler_highlights() end },
+    }
 }
