@@ -42,7 +42,7 @@ return {
                 },
                 always_divide_middle = true,
                 always_show_tabline = false,
-                globalstatus = false,
+                globalstatus = true,
                 refresh = {
                     -- Wintabs will handle rendering
                     -- @todo Have this re-enable when wintabs is disabled
