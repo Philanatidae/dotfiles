@@ -59,13 +59,25 @@ else
     vim.keymap.set('n', '<C-9>', ":<C-u>exe 'resize -' . v:count1<CR>", { desc = 'Decrease window width' })
 
     vim.keymap.set('n', '<leader>l', ":<C-u>exe ':wincmd ' . v:count1 . 'l'<CR>",
-        { desc = 'Move cursor to right window' })
+        {
+            silent = true,
+            desc = 'Move cursor to right window',
+        })
     vim.keymap.set('n', '<leader>k', ":<C-u>exe ':wincmd ' . v:count1 . 'k'<CR>",
-        { desc = 'Move cursor to above window' })
+        {
+            silent = true,
+            desc = 'Move cursor to above window',
+        })
     vim.keymap.set('n', '<leader>j', ":<C-u>exe ':wincmd ' . v:count1 . 'j'<CR>",
-        { desc = 'Move cursor to below window' })
+        {
+            silent = true,
+            desc = 'Move cursor to below window',
+        })
     vim.keymap.set('n', '<leader>h', ":<C-u>exe ':wincmd ' . v:count1 . 'h'<CR>",
-        { desc = 'Move cursor to left window' })
+        {
+            silent = true,
+            desc = 'Move cursor to left window',
+        })
 
     -- Diagnostics
     vim.keymap.set('n', '<leader>e', function() vim.diagnostic.open_float() end, { desc = 'Open diagnostic window' })
