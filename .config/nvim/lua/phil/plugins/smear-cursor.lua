@@ -1,6 +1,6 @@
 return {
     'sphamba/smear-cursor.nvim',
-    enabled = true,
+    enabled = false,
     lazy = true,
     event = 'VeryLazy',
     opts = {
