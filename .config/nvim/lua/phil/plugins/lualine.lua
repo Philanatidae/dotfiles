@@ -6,6 +6,34 @@ return {
         'nvim-tree/nvim-web-devicons',
     },
     config = function()
+        local function get_mode_with_hydra()
+            local ok, hydra = pcall(require, "hydra.statusline")
+            if ok and hydra.is_active() then
+                -- Returns the name of the active Hydra (e.g., "WINDOW", "BARBAR")
+                -- You can customize the styling or add an icon here if you like
+                return hydra.get_name() or "HYDRA"
+            end
+
+            -- Fallback to standard standard vim mode if no Hydra is active
+            -- We call lualine's built-in mode component directly
+            return require("lualine.utils.mode").get_mode()
+        end
+        local function get_mode_color_bg()
+            local ok, hydra = pcall(require, "hydra.statusline")
+            if ok and hydra.is_active() then
+                local hydra_color = hydra.get_color() or '#ff5f5f'
+                local hl_name = 'LualineHydra_' .. hydra_color:gsub('#', '')
+                vim.api.nvim_set_hl(0, hl_name, {
+                    fg = '#ffffff',
+                    bg = hydra_color,
+                    bold = true,
+                })
+                return hl_name
+            end
+            -- Return nil to let lualine use its default mode-based coloring
+            return nil
+        end
+
         local function devicons_filetype()
             local devicons = require('nvim-web-devicons')
             local ft = vim.bo.filetype
@@ -56,9 +84,14 @@ return {
                 -- | A | B | C                             X | Y | Z |
                 -- +-------------------------------------------------+
                 lualine_a = {
-                    'mode',
+                    -- 'mode',
+                    {
+                        get_mode_with_hydra,
+                        color = get_mode_color_bg,
+                    }
                 },
                 lualine_b = {
+                    -- @todo I really don't like the way that dap is shown in the bar
                     {
                         dap_ui_status,
                         color = { fg = '#ffffff', bg = '#008000' },
