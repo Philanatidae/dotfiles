@@ -1,6 +1,6 @@
 return {
     dir = '/Users/philiprader/Developer/Git/wintabs.nvim/',
-    enabled = true,
+    enabled = false,
     lazy = false,
     dependencies = {
     },

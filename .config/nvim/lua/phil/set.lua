@@ -34,7 +34,8 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-vim.opt.laststatus = 3
+vim.opt.laststatus = 0
+vim.opt.showtabline = 2
 
 -- Auto switch between relative and normal
 local numbertoggle_augroup = vim.api.nvim_create_augroup('numbertoggle', { clear = true })

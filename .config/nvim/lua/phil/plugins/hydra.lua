@@ -13,6 +13,13 @@ return {
                 -- This ensures that if you press a key not in the "heads" list,
                 -- it falls back to native Neovim behavior (or exits gracefully).
                 fallback = true,
+
+                on_enter = function()
+                    vim.api.nvim_exec_autocmds("User", { pattern = "HydraEnter", modeline = false, })
+                end,
+                on_exit = function()
+                    vim.api.nvim_exec_autocmds("User", { pattern = "HydraExit", modeline = false, })
+                end,
             },
             heads = {
                 -- Arrow keys or hjkl to resize effortlessly
