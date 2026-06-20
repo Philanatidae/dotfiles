@@ -1,2 +1,0 @@
-- [ ] Fix auto pair close being a bit buggy when closing one already open
-- [ ] When creating a new line it doesn't use the same indentation (moves to beginning of line)
