@@ -34,8 +34,12 @@ vim.opt.splitbelow = true
 vim.opt.splitright = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-vim.opt.laststatus = 0
 vim.opt.showtabline = 2
+-- Hide statusbar, tabline is used instead
+vim.opt.laststatus = 0
+vim.opt.statusline = '%='
+-- Noice is used instead of the command bar at the bottom
+vim.opt.cmdheight = 0
 
 -- Auto switch between relative and normal
 local numbertoggle_augroup = vim.api.nvim_create_augroup('numbertoggle', { clear = true })
