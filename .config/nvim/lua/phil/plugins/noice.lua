@@ -1,6 +1,6 @@
 return {
     'folke/noice.nvim',
-    enabled = true,
+    enabled = false,
     lazy = true,
     event = "VeryLazy",
     dependencies = {
