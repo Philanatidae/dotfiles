@@ -8,7 +8,12 @@ return {
         vim.g.wintabs_autoclose = 1
 
         vim.g.wintabs_display = 'winbar'
-        vim.g.wintabs_ui_active_higroup = 'TabLineSel'
+        vim.g.wintabs_ui_active_higroup = 'WinbarActive'
+    end,
+    config = function()
+        local visual_bg = vim.api.nvim_get_hl(0, { name = 'Visual' }).bg
+        local normal_fg = vim.api.nvim_get_hl(0, { name = 'Normal' }).fg
+        vim.api.nvim_set_hl(0, 'WinbarActive', { fg = normal_fg, bg = visual_bg, bold = true })
     end,
     keys = {
         -- @todo Decide if these two should be replaced with ]b & [b
