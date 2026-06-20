@@ -1,7 +1,7 @@
 return {
     'folke/flash.nvim',
     -- There's some issue with the highlighting group in my theme I think
-    enabled = false,
+    enabled = true,
     lazy = true,
     event = 'VeryLazy',
     ---@type Flash.Config
