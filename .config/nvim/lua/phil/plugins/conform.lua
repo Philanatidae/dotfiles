@@ -10,15 +10,27 @@ return {
         {
             '<leader>f',
             function()
-                require("conform").format({ async = true })
+                require("conform").format({
+                    async = true,
+                    lsp_format = 'fallback'
+                })
             end,
             desc = 'Format buffer',
         },
     },
-    -- This will provide type hinting with LuaLS
     ---@module "conform"
     ---@type conform.setupOpts
     opts = {
+        formatters_by_ft = {
+            lua = { 'stylua' },
+            -- python = { 'isort', 'black' },
+            -- javascript = { 'prettierd', 'prettier', stop_after_first = true },
+            -- add the filetypes you actually work with
+        },
+        format_on_save = {
+            timeout_ms = 500,
+            lsp_format = 'fallback',
+        },
     },
     init = function()
         vim.o.formatexpr = 'v:lua.require\'conform\'.formatexpr()'

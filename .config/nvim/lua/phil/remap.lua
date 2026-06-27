@@ -52,12 +52,6 @@ else
     end, { desc = 'Quit Neovim' })
 
     -- Window management
-    -- @todo Consider moving to Hydra
-    vim.keymap.set('n', '<C-=>', ":<C-u>exe 'vertical resize +' . v:count1<CR>", { desc = "Increase window height" })
-    vim.keymap.set('n', '<C-->', ":<C-u>exe 'vertical resize -' . v:count1<CR>", { desc = "Decrease window height" })
-    vim.keymap.set('n', '<C-0>', ":<C-u>exe 'resize +' . v:count1<CR>", { desc = 'Increase window width' })
-    vim.keymap.set('n', '<C-9>', ":<C-u>exe 'resize -' . v:count1<CR>", { desc = 'Decrease window width' })
-
     vim.keymap.set('n', '<leader>l', ":<C-u>exe ':wincmd ' . v:count1 . 'l'<CR>",
         {
             silent = true,

@@ -9,8 +9,7 @@ return {
     },
     keys = {
         { '<leader>cc', '<cmd>CodeCompanionChat toggle<cr>', desc = 'AI Chat',    mode = { 'n', 'v' }, },
-        -- @todo This interferes with "code-actions"
-        -- { '<leader>ca', '<cmd>CodeCompanionActions<cr>',     desc = 'AI Actions', mode = { 'n', 'v' }, },
+        { '<leader>ca', '<cmd>CodeCompanionActions<cr>',     desc = 'AI Actions', mode = { 'n', 'v' }, },
     },
     dependencies = {
         'nvim-lua/plenary.nvim',
