@@ -1,6 +1,7 @@
 return {
     'karb94/neoscroll.nvim',
     enabled = false,
-    lazy = false,
+    lazy = true,
+    event = 'VeryLazy',
     opts = {},
 }

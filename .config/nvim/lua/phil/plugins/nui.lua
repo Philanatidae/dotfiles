@@ -1,5 +1,5 @@
 return {
-    'MunifTanjim.nui.nvim',
+    'MunifTanjim/nui.nvim',
     lazy = true,
     optional = true,
 }

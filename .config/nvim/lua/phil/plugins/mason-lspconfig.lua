@@ -5,7 +5,8 @@ return {
         'neovim/nvim-lspconfig',
     },
     enabled = true,
-    lazy = false,
+    lazy = true,
+    event = { 'BufReadPre', 'BufNewFile' },
     cond = not vim.g.vscode,
     opts = {
     },

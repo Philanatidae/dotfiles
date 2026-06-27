@@ -4,7 +4,8 @@ return {
         'saghen/blink.cmp',
     },
     enabled = true,
-    lazy = false,
+    lazy = true,
+    event = { 'BufReadPre', 'BufNewFile' },
     config = function()
         local capabilities = {
             textDocument = {
@@ -21,7 +22,10 @@ return {
             capabilities = capabilities,
         })
         vim.lsp.config('clangd', {
-            cmd = { 'clangd', '--all-scopes-completion', '--header-insertion=never', '--completion-style=detailed' },
+            cmd = { 'clangd',
+                '--all-scopes-completion',
+                --'--header-insertion=never',
+                '--completion-style=detailed' },
             filetypes = { 'c', 'cpp', 'objc', 'objcpp', },
             single_file_support = false,
         })

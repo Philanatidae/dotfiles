@@ -2,7 +2,7 @@ return {
     'nvim-neo-tree/neo-tree.nvim',
     branch = 'v3.x',
     enabled = true,
-    lazy = false, -- Neotree lazy loads itself apparently
+    lazy = false, -- Neotree lazy loads itself
     dependencies = {
         'nvim-lua/plenary.nvim',
         'MunifTanjim/nui.nvim',

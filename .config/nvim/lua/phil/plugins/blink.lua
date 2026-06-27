@@ -1,10 +1,12 @@
 return {
     'saghen/blink.cmp',
+    version = '1.*',
+    enabled = true,
+    lazy = false, -- Plugin will lazy load itself
     -- @todo provides snippets for the snippet source
     -- dependencies = { 'rafamadriz/friendly-snippets' },
     --
     -- use a release tag to download pre-built binaries
-    version = '1.*',
     dependencies = {
         'nvim-tree/nvim-web-devicons',
         'onsails/lspkind.nvim',

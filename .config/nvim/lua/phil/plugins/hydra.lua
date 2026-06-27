@@ -1,7 +1,10 @@
 return {
     'nvimtools/hydra.nvim',
     enabled = true,
-    lazy = false,
+    lazy = true,
+    keys = {
+        { '<C-w>', desc = 'Window hydra' }
+    },
     config = function()
         local Hydra = require("hydra")
 
@@ -10,10 +13,6 @@ return {
             mode = "n",
             body = "<C-w>",
             config = {
-                -- This ensures that if you press a key not in the "heads" list,
-                -- it falls back to native Neovim behavior (or exits gracefully).
-                fallback = true,
-
                 on_enter = function()
                     vim.api.nvim_exec_autocmds("User", { pattern = "HydraEnter", modeline = false, })
                 end,
@@ -23,8 +22,8 @@ return {
             },
             heads = {
                 -- Arrow keys or hjkl to resize effortlessly
-                { "=",     "5<C-w>>", { desc = "Decrease width" } },
-                { "-",     "5<C-w><", { desc = "Increase width" } },
+                { "=",     "5<C-w>>", { desc = "Increase width" } },
+                { "-",     "5<C-w><", { desc = "Decrease width" } },
                 { "_",     "3<C-w>-", { desc = "Decrease height" } },
                 { "+",     "3<C-w>+", { desc = "Increase height" } },
 

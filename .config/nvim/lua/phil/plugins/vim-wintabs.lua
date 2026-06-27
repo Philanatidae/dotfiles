@@ -1,7 +1,7 @@
 return {
     'philanatidae/vim-wintabs',
     enabled = true,
-    lazy = false,
+    lazy = false, -- This isn't a nvim plugin, can't lazy load
     init = function()
         -- When closing the last tab in the window, keep the window
         -- active. Pressing <leader>q again will close the window.

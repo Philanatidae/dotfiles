@@ -2,10 +2,15 @@ return {
     'folke/noice.nvim',
     enabled = true,
     lazy = true,
-    event = "VeryLazy",
+    event = 'VeryLazy',
     dependencies = {
         'MunifTanjim/nui.nvim',
     },
     opts = {
+        lsp = {
+            progress = {
+                enabled = false,
+            },
+        },
     },
 }

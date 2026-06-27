@@ -1,7 +1,8 @@
 return {
     'rebelot/heirline.nvim',
     enabled = true,
-    lazy = false,
+    lazy = true,
+    event = 'UiEnter',
     dependencies = {
         'nvim-tree/nvim-web-devicons',
     },

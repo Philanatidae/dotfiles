@@ -6,14 +6,13 @@ return {
         'nvim-neotest/nvim-nio',
     },
     lazy = true,
+    -- @todo This needs to be rewritten
     keys = function()
-        local dapui = require('dapui')
-
         return {
             {
                 '<leader>D',
                 function()
-                    dapui.toggle()
+                    require('dapui').toggle()
                     if not vim.g.dapui_enabled then
                         vim.g.dapui_enabled = true
                     else

@@ -12,6 +12,7 @@ return {
     },
     config = function()
         -- @todo Move this into a utility to be used multiple places
+        -- @todo This appears to be broken :-(
         local file_create = function(prompt_bufnr)
             -- Originally from https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/e94f29d800f582f317bb25f986c2cf487c9dec7f/lua/telescope/_extensions/file_browser/actions.lua#L69
             local actions = require('telescope.actions')
