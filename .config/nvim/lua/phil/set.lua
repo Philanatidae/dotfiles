@@ -14,7 +14,6 @@ vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
 vim.opt.autoindent = true
-vim.opt.smartindent = true
 vim.opt.breakindent = true
 
 -- Search
@@ -33,6 +32,7 @@ vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 vim.opt.splitbelow = true
 vim.opt.splitright = true
+vim.opt.splitkeep = 'screen'
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 vim.opt.showtabline = 2
@@ -47,18 +47,20 @@ local numbertoggle_augroup = vim.api.nvim_create_augroup('numbertoggle', { clear
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter' }, {
     pattern = "*",
     group = numbertoggle_augroup,
-    callback = function()
-        if vim.opt.number:get() and vim.api.nvim_get_mode().mode ~= 'i' then
-            vim.opt.relativenumber = true
+    callback = function(e)
+        local win = vim.fn.bufwinid(e.buf)
+        if win ~= -1 and vim.wo[win].number and vim.api.nvim_get_mode().mode ~= 'i' then
+            vim.wo.relativenumber = true
         end
     end,
 })
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
     pattern = '*',
     group = numbertoggle_augroup,
-    callback = function()
-        if vim.opt.number:get() then
-            vim.opt.relativenumber = false
+    callback = function(e)
+        local win = vim.fn.bufwinid(e.buf)
+        if win ~= -1 and vim.wo[win].number then
+            vim.wo[win].relativenumber = false
         end
     end,
 })
@@ -86,13 +88,16 @@ end
 local sev = vim.diagnostic.severity
 vim.diagnostic.config({
     virtual_text = true,
+    virtual_lines = {
+        current_line = true,
+    },
     severity_sort = true,
     signs = {
         text = {
-            [sev.ERROR] = '',
-            [sev.WARN] = '',
-            [sev.INFO] = '',
-            [sev.HINT] = '',
+            [sev.ERROR] = ' ',
+            [sev.WARN] = ' ',
+            [sev.INFO] = ' ',
+            [sev.HINT] = ' ',
         }
     },
     float = {
