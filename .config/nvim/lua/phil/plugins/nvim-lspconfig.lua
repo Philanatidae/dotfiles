@@ -27,7 +27,7 @@ return {
                 --'--header-insertion=never',
                 '--completion-style=detailed' },
             filetypes = { 'c', 'cpp', 'objc', 'objcpp', },
-            single_file_support = false,
+            -- single_file_support = false,
         })
         -- mason-lspconfig starts most LSPs automatically, with these exceptions:
         --  - flutter-tools: dartls
