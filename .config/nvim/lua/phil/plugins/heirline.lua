@@ -134,7 +134,25 @@ return {
                 -- pattern = '*:*',
                 callback = vim.schedule_wrap(function()
                     -- @todo This is hardcoded to tabline, allow switch between tabline or statusline
-                    vim.cmd('redrawtabline')
+                    vim.cmd('redrawstatus')
+                end)
+            },
+        }
+
+        local MacroRec = {
+            condition = function()
+                return vim.fn.reg_recording() ~= ''
+            end,
+            provider = function()
+                return ' 󰑋 @' .. vim.fn.reg_recording()
+            end,
+            update = {
+                'RecordingEnter',
+                'RecordingLeave',
+                -- reg_recording() is still set during RecordingLeave,
+                -- so defer the redraw until after it clears
+                callback = vim.schedule_wrap(function()
+                    vim.cmd('redrawstatus')
                 end)
             },
         }
@@ -242,6 +260,7 @@ return {
             end,
             Space,
             Mode,
+            MacroRec,
             Space,
         }
         local SectionB = {
@@ -325,7 +344,7 @@ return {
             SectionZ,
         }
         require('heirline').setup({
-            tabline = status_line,
+            statusline = status_line,
         })
 
         if _G.heirline_clock_timer then

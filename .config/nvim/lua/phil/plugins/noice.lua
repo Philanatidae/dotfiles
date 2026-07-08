@@ -12,14 +12,6 @@ return {
                 enabled = false,
             },
         },
-        -- @todo There's no indication of macros recording.
-        -- routes = {
-        --     {
-        --         filter = {
-        --             event = 'msg_showmode',
-        --         },
-        --         view = 'mini',
-        --     },
-        -- }
+        -- Macro recording indicator is shown in the heirline statusline
     },
 }
