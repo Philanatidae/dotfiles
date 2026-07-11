@@ -10,6 +10,8 @@ return {
             'markdown_inline',
             'html',
             'yaml',
+            'bash',
+            'regex',
         },
     },
 }
