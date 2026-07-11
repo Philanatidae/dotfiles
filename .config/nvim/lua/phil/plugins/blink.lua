@@ -6,7 +6,7 @@ return {
     --
     -- use a release tag to download pre-built binaries
     dependencies = {
-        'nvim-tree/nvim-web-devicons',
+        'nvim-mini/mini.icons',
         'onsails/lspkind.nvim',
         'L3MON4D3/LuaSnip',
     },
@@ -112,7 +112,7 @@ return {
                             text = function(ctx)
                                 local icon = ctx.kind_icon
                                 if vim.tbl_contains({ 'Path' }, ctx.source_name) then
-                                    local dev_icon, _ = require('nvim-web-devicons').get_icon(ctx.label)
+                                    local dev_icon = require('mini.icons').get('file', ctx.label)
                                     if dev_icon then
                                         icon = dev_icon
                                     end
@@ -127,9 +127,10 @@ return {
                             highlight = function(ctx)
                                 local hl = ctx.kind_hl
                                 if vim.tbl_contains({ 'Path' }, ctx.source_name) then
-                                    local dev_icon, dev_hl = require('nvim-web-devicons').get_icon(ctx.label)
-                                    if dev_icon then
-                                        hl = dev_hl
+                                    local miniicons = require('mini.icons')
+                                    local icon, category = miniicons.get('file', ctx.label)
+                                    if icon then
+                                        hl = miniicons.get_hl_name(category, ctx.label)
                                     end
                                 end
                                 return hl

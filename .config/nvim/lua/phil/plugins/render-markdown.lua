@@ -4,7 +4,7 @@ return {
     lazy = true,
     ft = { 'markdown', 'codecompanion' },
     dependencies = {
-        'nvim-tree/nvim-web-devicons',
+        'nvim-mini/mini.icons',
     },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig

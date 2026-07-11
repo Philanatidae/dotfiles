@@ -7,7 +7,7 @@ return {
         'nvim-lua/plenary.nvim',
         'MunifTanjim/nui.nvim',
         '3rd/image.nvim',
-        'nvim-tree/nvim-web-devicons',
+        'nvim-mini/mini.icons',
     },
     cond = not vim.g.vscode,
     cmd = 'Neotree',

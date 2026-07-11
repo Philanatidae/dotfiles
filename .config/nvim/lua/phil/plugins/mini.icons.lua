@@ -1,5 +1,6 @@
 return {
-    'nvim-tree/nvim-web-devicons',
+    'nvim-mini/mini.icons',
+    verion = '*',
     lazy = true,
     optional = true,
 }

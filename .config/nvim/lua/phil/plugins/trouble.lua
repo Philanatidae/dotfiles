@@ -3,7 +3,7 @@ return {
     enabled = false,
     lazy = true,
     dependencies = {
-        'nvim-tree/nvim-web-devicons',
+        'nvim-mini/mini.icons',
     },
     cmd = 'Trouble',
     opts = {},

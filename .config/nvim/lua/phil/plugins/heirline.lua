@@ -4,7 +4,7 @@ return {
     lazy = true,
     event = 'UiEnter',
     dependencies = {
-        'nvim-tree/nvim-web-devicons',
+        'nvim-mini/mini.icons',
     },
     config = function()
         local conditions = require('heirline.conditions')
@@ -170,12 +170,11 @@ return {
 
         local DeviconFiletype = {
             init = function(self)
-                local devicons = require('nvim-web-devicons')
                 local ft = vim.bo.filetype
                 if ft == '' then
                     self.filetype = 'unknown 󰡯 '
                 else
-                    local icon = devicons.get_icon_by_filetype(ft, { default = true })
+                    local icon = require('mini.icons').get('filetype', ft)
                     self.filetype = ft .. ' ' .. (icon or '') .. ' '
                 end
             end,
