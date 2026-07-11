@@ -1,7 +1,7 @@
 return {
-    "folke/lazydev.nvim",
+    'folke/lazydev.nvim',
     enabled = true,
     lazy = true,
-    ft = "lua",
+    ft = 'lua',
     opts = {},
 }
