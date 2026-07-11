@@ -3,6 +3,9 @@ return {
     version = false,
     lazy = true,
     event = 'VeryLazy',
+    dependencies = {
+        'nvim-treesitter-textobjects'
+    },
     config = function()
         local ai = require('mini.ai')
 
