@@ -1,6 +1,8 @@
 alias lg=lazygit
 
 export PROMPT='%F{208}(%n)%f %F{226}%~%f$ '
+export EDITOR="nvim"
+export VISUAL="$EDITOR"
 
 export CLICOLOR=1
 export LSCOLORS=GxFxCxDxBxegedabagaced
