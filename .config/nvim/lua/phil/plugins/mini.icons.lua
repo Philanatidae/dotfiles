@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.icons',
-    verion = '*',
+    version = false,
     lazy = true,
     optional = true,
     specs = {
