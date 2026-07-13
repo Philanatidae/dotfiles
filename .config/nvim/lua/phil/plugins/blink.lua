@@ -130,7 +130,7 @@ return {
                                     local miniicons = require('mini.icons')
                                     local icon, category = miniicons.get('file', ctx.label)
                                     if icon then
-                                        hl = miniicons.get_hl_name(category, ctx.label)
+                                        hl = miniicons.get_hl(category, ctx.label)
                                     end
                                 end
                                 return hl
