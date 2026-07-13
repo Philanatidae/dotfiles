@@ -24,7 +24,7 @@ return {
         vim.lsp.config('clangd', {
             cmd = { 'clangd',
                 '--all-scopes-completion',
-                --'--header-insertion=never',
+                '--header-insertion=never',
                 '--completion-style=detailed' },
             filetypes = { 'c', 'cpp', 'objc', 'objcpp', },
             -- single_file_support = false,

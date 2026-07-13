@@ -6,5 +6,6 @@ vim.filetype.add({
         mm   = 'objcpp',
         vert = 'glsl',
         frag = 'glsl',
+        hlsl = 'hlsl',
     },
 })
