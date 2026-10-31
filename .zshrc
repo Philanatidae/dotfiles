@@ -25,8 +25,27 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 # Potential: change keybindings to vim-style
 # bindkey -v
 
-# brew install zsh-syntax-highlighting
-if [[ "$OSTYPE" == "darwin"* ]]; then # macOS
-    source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# zsh-syntax-highlighting
+if [[ "$OSTYPE" == darwin* ]]; then
+    zsh_hl=/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    [[ -r $zsh_hl ]] || zsh_hl=/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    zsh_hl_install="brew install zsh-syntax-highlighting"
+elif [[ "$OSTYPE" == linux* ]] && grep -qi '^ID=.*fedora' /etc/os-release 2>/dev/null; then
+    zsh_hl=/usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    zsh_hl_install="sudo dnf install -y zsh-syntax-highlighting"
 fi
 
+if [[ -r $zsh_hl ]]; then
+    source $zsh_hl
+elif [[ -n $zsh_hl_install ]] && [[ -o interactive ]]; then
+    if read -q "?zsh-syntax-highlighting not found. Install with '$zsh_hl_install'? [y/N] "; then
+        echo
+        eval $zsh_hl_install && source $zsh_hl
+    fi
+    echo
+fi
+unset zsh_hl zsh_hl_install
+
+if [[ "$OSTYPE" != darwin* ]]; then
+    alias task=go-task
+fi
