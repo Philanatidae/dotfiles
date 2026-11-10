@@ -128,9 +128,9 @@ return {
                                 local hl = ctx.kind_hl
                                 if vim.tbl_contains({ 'Path' }, ctx.source_name) then
                                     local miniicons = require('mini.icons')
-                                    local icon, category = miniicons.get('file', ctx.label)
+                                    local icon, icon_hl = miniicons.get('file', ctx.label)
                                     if icon then
-                                        hl = miniicons.get_hl(category, ctx.label)
+                                        hl = icon_hl
                                     end
                                 end
                                 return hl
