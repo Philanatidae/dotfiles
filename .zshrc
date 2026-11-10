@@ -30,3 +30,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then # macOS
     source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
 
+if [ -f "$HOME/.zshrc.local" ]; then
+    source "$HOME/.zshrc.local"
+fi
+
