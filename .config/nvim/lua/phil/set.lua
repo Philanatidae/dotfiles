@@ -7,6 +7,7 @@ vim.opt.confirm = true
 vim.opt.exrc = true
 vim.opt.undofile = true
 vim.opt.mouse = 'a'
+vim.opt.foldmethod = 'marker'
 
 -- Indent w/ 4 spaces
 vim.opt.tabstop = 4
