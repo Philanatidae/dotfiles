@@ -1,8 +1,7 @@
 return {
     'arborist-ts/arborist.nvim',
     enabled = true,
-    lazy = true,
-    event = 'VeryLazy',
+    lazy = false,
     dependencies = {
         { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' }
     },
