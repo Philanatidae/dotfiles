@@ -25,16 +25,26 @@ return {
     },
     config = true,
     opts = {
+        filesystem = {
+            use_libuv_file_watcher = true,
+        },
         event_handlers = {
             {
                 event = 'neo_tree_buffer_enter',
                 handler = function()
+                    require('neo-tree.sources.git_status').refresh()
                     vim.cmd([[
                         setlocal number
                       setlocal relativenumber
                     ]])
                 end,
             },
+            {
+                event = 'file_opened',
+                handler = function()
+                    require('neo-tree.sources.git_status').refresh()
+                end,
+            }
         },
     },
 }
